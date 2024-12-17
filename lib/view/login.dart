@@ -1,8 +1,7 @@
 import 'package:book_store/view/signUp.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:book_store/controller/login_controller.dart';
-import 'home.dart'; // Trang chính sau khi đăng nhập
+import 'home.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -33,7 +32,6 @@ class _LoginPageState extends State<LoginPage> {
         password: _passwordController.text.trim(),
         context: context,
       );
-
       // Chuyển hướng đến HomePage
       Navigator.pushReplacement(
         context,
@@ -85,9 +83,7 @@ class _LoginPageState extends State<LoginPage> {
               child: Text('Create an Account'),
             ),
           ],
-
         ),
-
       ),
     );
   }

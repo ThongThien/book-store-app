@@ -1,3 +1,4 @@
+import 'package:book_store/view/home.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'view/login.dart';
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Book Store',
       theme: ThemeData(primarySwatch: Colors.blue),
-      home: LoginPage(),
+      home: HomePage(),
     );
   }
 }

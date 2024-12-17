@@ -26,7 +26,6 @@ class LoginController {
       if (response != null) {
         final role = response['role'];
         final id = response['id'].toString();
-
         // Lưu thông tin vào UserProvider
         Provider.of<UserProvider>(context, listen: false).setUser(role, id);
       } else {
