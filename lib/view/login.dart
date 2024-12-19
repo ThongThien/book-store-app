@@ -1,3 +1,11 @@
+import 'package:book_store/chitietsanpham/chitietsanpham.dart';
+import 'package:book_store/chitietsanpham/danhmuc.dart';
+import 'package:book_store/chitietsanpham/giohang.dart';
+import 'package:book_store/chitietsanpham/kiemtraxacnhan.dart';
+import 'package:book_store/chitietsanpham/supabase.dart';
+import 'package:book_store/chitietsanpham/thanhtoan.dart';
+import 'package:book_store/chitietsanpham/thongbaothanhtoanthanhcong.dart';
+import 'package:book_store/chitietsanpham/xacnhanthanhtoan.dart';
 import 'package:book_store/view/signUp.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -58,7 +66,15 @@ class _LoginPageState extends State<LoginPage> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
+          children:[
+          buildNavigateButton(context,title: "Chi tiết sản phẩm",destination:Chitietsanpham()),
+          buildNavigateButton(context,title: "Giỏ hàng",destination:GioHang()),
+          buildNavigateButton(context,title: "Thanh toán",destination:Thanhtoan()),
+          buildNavigateButton(context,title: "Xác nhận Thanh toán",destination:XacNhanThanhToan()),
+          buildNavigateButton(context,title: "Kiểm tra xác nhận Thanh toán",destination:KiemTraXacNhan()),
+          buildNavigateButton(context,title: "Thông báo đặt hàng thành công",destination:Thongbaothanhtoanthanhcong()),
+            buildNavigateButton(context,title: "Danh mục",destination:Danhmuc()),
+            buildNavigateButton(context,title: "Supabase",destination:SupabaseApp()),
             TextField(
               controller: _usernameController,
               decoration: const InputDecoration(labelText: 'Username'),
@@ -88,6 +104,20 @@ class _LoginPageState extends State<LoginPage> {
 
         ),
 
+      ),
+    );
+  }
+  Widget buildNavigateButton(BuildContext context,{required String title,required Widget destination}) {
+    return Container(
+      width: 250,
+
+      child: ElevatedButton(
+          onPressed: (){
+            Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => destination,)
+            )   ;
+          },
+          child:  Text(title)
       ),
     );
   }
