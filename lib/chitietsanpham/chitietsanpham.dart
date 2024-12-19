@@ -5,114 +5,113 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+
 class Chitietsanpham extends StatelessWidget {
-   Chitietsanpham({super.key});
-  final controller=Get.put(GetXControllerIDCart());
+  Chitietsanpham({super.key});
+
+  final controller = Get.put(GetXControllerIDCart());
+
   @override
   Widget build(BuildContext context) {
-    final arg=(ModalRoute.of(context)!.settings.arguments) as Book;
+    final arg = (ModalRoute.of(context)!.settings.arguments) as Book;
     return Scaffold(
       bottomNavigationBar: Container(
         height: 70,
         child: Container(
-        color: Colors.white,
+          color: Colors.white,
           child: Row(
             children: [
               Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 15,right: 15),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Expanded(
-                            child:Container(
-                              width: 20,
-                              height: 30,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5),
-                                  shape: BoxShape.rectangle,
-                                  color: Colors.black38
-                              ),
-                              child: IconButton(
+                  child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15, right: 15),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          child: Container(
+                            width: 20,
+                            height: 30,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                shape: BoxShape.rectangle,
+                                color: Colors.black38),
+                            child: IconButton(
                                 iconSize: 20,
                                 onPressed: () {
                                   controller.increase();
                                 },
-                                icon: Icon(Icons.add)
-                              ),
+                                icon: Icon(Icons.add)),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 3,
+                          child: Container(
+                            padding: EdgeInsets.only(
+                                left: 10, right: 10, bottom: 6, top: 6),
+                            color: Colors.white,
+                            child: GetBuilder(
+                              init: controller,
+                              id: "count",
+                              builder: (controller) {
+                                return Text("${controller.count}");
+                              },
                             ),
                           ),
-                          Expanded(
-                            flex: 3,
-                            child: Container(
-                              padding: EdgeInsets.only(left: 10,right: 10,bottom: 6,top: 6),
-                              color: Colors.white,
-                              child: GetBuilder(
-                                init: controller,
-                                id: "count",
-                                builder: (controller) {
-                                  return Text("${controller.count}");
-                                },
-                              ),
+                        ),
+                        Expanded(
+                          child: Container(
+                            height: 30,
+                            width: 20,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              shape: BoxShape.rectangle,
+                              color: Colors.black38,
                             ),
-                          ),
-                          Expanded(
-                            child:Container(
-                              height: 30,
-                              width: 20,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5),
-                                  shape: BoxShape.rectangle,
-                                  color: Colors.black38,
-                              ),
-                              child: IconButton(
+                            child: IconButton(
                                 iconSize: 20,
-                                  onPressed: () {
-                                    controller.decrease();
-                                  },
-                                  icon: Icon(Icons.remove)
-
-                              ),
-                            ),
+                                onPressed: () {
+                                  controller.decrease();
+                                },
+                                icon: Icon(Icons.remove)),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                  ],
-                )
-              ),
+                  ),
+                ],
+              )),
               Expanded(
                   child: Container(
-                    alignment: Alignment.center,
-                    height: 70,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.rectangle,
-                      color: Colors.white,
-                    ),
-                    child: GestureDetector(
-                      onTap: () {
-                        CartController.controller.addToCart(arg,controller.count);
-                      },
-                      child:Text("Thêm vào giỏ hàng",style: TextStyle(fontSize: 20,color: Colors.orange)) ,
-                    ),
-                  )
-              ),
+                alignment: Alignment.center,
+                height: 70,
+                decoration: BoxDecoration(
+                  shape: BoxShape.rectangle,
+                  color: Colors.white,
+                ),
+                child: GestureDetector(
+                  onTap: () {
+                    CartController.controller.addToCart(arg, controller.count);
+                  },
+                  child: Text("Thêm vào giỏ hàng",
+                      style: TextStyle(fontSize: 20, color: Colors.orange)),
+                ),
+              )),
               Expanded(
                   child: Container(
-                    alignment: Alignment.center,
-                    height: 70,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.rectangle,
-                      color: Colors.orange
-                    ),
-                    child: GestureDetector(
-                      child:Text("Mua ngay",style: TextStyle(fontSize: 20,color: Colors.white),) ,
-                    ),
-                  )
-              ),
+                alignment: Alignment.center,
+                height: 70,
+                decoration: BoxDecoration(
+                    shape: BoxShape.rectangle, color: Colors.orange),
+                child: GestureDetector(
+                  child: Text(
+                    "Mua ngay",
+                    style: TextStyle(fontSize: 20, color: Colors.white),
+                  ),
+                ),
+              )),
             ],
           ),
         ),
@@ -120,54 +119,33 @@ class Chitietsanpham extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.orange,
         actions: [
+          IconButton(onPressed: () {}, icon: Icon(Icons.search)),
+          IconButton(onPressed: () {}, icon: Icon(Icons.home_outlined)),
           IconButton(
-              onPressed: () {
-
-              },
-              icon: Icon(Icons.search)
-          ),
-          IconButton(
-              onPressed: () {
-
-              },
-              icon: Icon(Icons.home_outlined)
-          ),
-          IconButton(
-              onPressed: () {
-
-              },
-              icon: Icon(Icons.shopping_cart_checkout_outlined)
-          ),
-          IconButton(
-              onPressed: () {
-
-              },
-              icon: Icon(Icons.menu)
-          ),
+              onPressed: () {},
+              icon: Icon(Icons.shopping_cart_checkout_outlined)),
+          IconButton(onPressed: () {}, icon: Icon(Icons.menu)),
         ],
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.only(left: 5,right: 5,top: 0,bottom: 0),
+          padding: EdgeInsets.only(left: 5, right: 5, top: 0, bottom: 0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CarouselSlider(
                 options: CarouselOptions(height: 400.0),
-                items: [1,2,3,4,5].map((i) {
+                items: [1, 2, 3, 4, 5].map((i) {
                   return Builder(
                     builder: (BuildContext context) {
                       return Container(
                           width: MediaQuery.of(context).size.width,
                           margin: EdgeInsets.symmetric(horizontal: 5.0),
                           padding: EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                              color: Colors.white
-                          ),
+                          decoration: BoxDecoration(color: Colors.white),
                           child: FittedBox(
-                              child: Image.network("${arg.image}"),
-                          )
-                      );
+                            child: Image.network("${arg.image}"),
+                          ));
                     },
                   );
                 }).toList(),
@@ -178,15 +156,33 @@ class Chitietsanpham extends StatelessWidget {
                   crossAxisAlignment: WrapCrossAlignment.center,
                   spacing: 10,
                   children: [
-                    Text("${arg.price} \$ ",style: TextStyle(fontSize: 30,color: Colors.red,fontWeight: FontWeight.w900),),
-                    Text("178.000",style: TextStyle(fontSize:20,color: CupertinoColors.systemGrey2,decoration: TextDecoration.lineThrough),),
-                    Text("-27%",style: TextStyle(color: Colors.red),)
+                    Text(
+                      "${arg.price} \$ ",
+                      style: TextStyle(
+                          fontSize: 30,
+                          color: Colors.red,
+                          fontWeight: FontWeight.w900),
+                    ),
+                    Text(
+                      "178.000",
+                      style: TextStyle(
+                          fontSize: 20,
+                          color: CupertinoColors.systemGrey2,
+                          decoration: TextDecoration.lineThrough),
+                    ),
+                    Text(
+                      "-27%",
+                      style: TextStyle(color: Colors.red),
+                    )
                   ],
                 ),
               ),
-              Text(arg.nameBook,style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold),),
+              Text(
+                arg.nameBook,
+                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+              ),
               Padding(
-                padding: const EdgeInsets.only(top: 10,bottom: 10),
+                padding: const EdgeInsets.only(top: 10, bottom: 10),
                 child: Row(
                   children: [
                     Text("(0)"),
@@ -198,25 +194,25 @@ class Chitietsanpham extends StatelessWidget {
                       flex: 2,
                     ),
                     IconButton(
-                      onPressed: () {
-                        
-                      }, 
-                      icon: Icon(Icons.favorite_border)
-                    )
+                        onPressed: () {}, icon: Icon(Icons.favorite_border))
                   ],
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(top: 20,bottom: 20),
+                padding: EdgeInsets.only(top: 20, bottom: 20),
                 child: Wrap(
                   direction: Axis.vertical,
                   spacing: 20,
                   children: [
-                    Text("Thông tin sản phẩm",style: TextStyle(fontWeight: FontWeight.bold),),
-                    infor("Mã hàng","${arg.id}"),
+                    Text(
+                      "Thông tin sản phẩm",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    infor("Mã hàng", "${arg.id}"),
                     infor("Tác giả", "${arg.author}"),
                     infor("Nhà xuất bản", "${arg.publisher}"),
-                    infor("Ngày xuất bản", "${ DateFormat('dd-MM-yyyy').format(arg.publicationDate)}"),
+                    infor("Ngày xuất bản",
+                        "${DateFormat('dd-MM-yyyy').format(arg.publicationDate)}"),
                     infor("Ngôn ngữ", "${arg.language}"),
                     infor("Thể loại", "${arg.categoryID}"),
                     infor("Mô tả", "${arg.description}"),
@@ -226,24 +222,29 @@ class Chitietsanpham extends StatelessWidget {
               Text("Đánh giá sản phẩm"),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5)
-                  ),
-                  side: BorderSide(
-                    color: Colors.red,
-                    width: 2.0,
-                  )
-                ),
-                onPressed: () {
-                },
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5)),
+                    side: BorderSide(
+                      color: Colors.red,
+                      width: 2.0,
+                    )),
+                onPressed: () {},
                 child: Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.edit,color: Colors.red,),
-                      SizedBox(width: 10,),
-                      Text("Viết đánh giá",style: TextStyle(color: Colors.red),)
+                      Icon(
+                        Icons.edit,
+                        color: Colors.red,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        "Viết đánh giá",
+                        style: TextStyle(color: Colors.red),
+                      )
                     ],
                   ),
                 ),
@@ -254,7 +255,8 @@ class Chitietsanpham extends StatelessWidget {
       ),
     );
   }
-  Padding infor(String w1,String w2){
+
+  Padding infor(String w1, String w2) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 10),
       child: Row(
@@ -271,4 +273,3 @@ class Chitietsanpham extends StatelessWidget {
     );
   }
 }
-

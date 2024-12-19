@@ -1,7 +1,6 @@
 import 'package:book_store/chitietsanpham/chitietsanpham.dart';
-import 'package:book_store/view/userInfo.dart';
+import 'package:book_store/view/profile.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import '../controller/book_controller.dart';
 import '../model/book.dart';
 import 'details.dart';
