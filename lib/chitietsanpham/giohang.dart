@@ -1,8 +1,26 @@
+import 'package:book_store/controller/cart_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+class CartApp extends StatelessWidget {
+  const CartApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return GetMaterialApp(
+      initialBinding: CartBindings() ,
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueAccent),
+        useMaterial3: true,
+      ),
+      debugShowCheckedModeBanner: false,
+      home: GioHang(),
+    );
+  }
+}
 
 class GioHang extends StatelessWidget {
-  const GioHang({super.key});
-
+  GioHang({super.key});
+  final controller = Get.put(CartController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,106 +65,115 @@ class GioHang extends StatelessWidget {
           color: Colors.black38,
           child: Padding(padding: EdgeInsets.all(8.0),
             child: Column(
-              children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      border: Border.all(
-                        width: 1,
-                        color: Colors.black12
-                      ),
-                      borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                    ),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: CheckboxListTile(
-                            controlAffinity: ListTileControlAffinity.leading,
-                            title: Image.network("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQssqDqtb8e2Xu3B44Nxoir1bFp2o4dq_VouQ&s"),
-                            value: true, onChanged: (value) {
-
-                          },)
-                        ),
-                        SizedBox(width: 10,),
-                        Expanded(child: Column(
-                          children: [
-                            Text("Sức mạnh của EQ - Đánh Thức Trí Tuệ Cảm Xúc - Lmà Chủ Ngôn Ngữ - Thu Phục Lòng Người"),
-                            SizedBox(height: 20,),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text("69.300 đ",style: TextStyle(fontSize: 17,color: Colors.orangeAccent,),),
-                                SizedBox(width: 15,),
-                                Text("99.000 đ",style: TextStyle(fontSize: 14,color: Colors.grey,decoration: TextDecoration.lineThrough),),
-                              ],
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                  ListView.builder(
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                        title: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            border: Border.all(
+                                width: 1,
+                                color: Colors.black12
                             ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(right: 20),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    child:Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(5),
-                                        shape: BoxShape.rectangle,
-                                        color: Colors.black38
-                                      ),
-                                      child: IconButton(
+                            borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                          ),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                  child: CheckboxListTile(
+                                    controlAffinity: ListTileControlAffinity.leading,
+                                    title: Image.network("${controller.cart[index].book.image}",height: 200,),
+                                    value: true, onChanged: (value) {
 
-                                          onPressed: () {
-
-                                          },
-                                          icon: Text("+",style: TextStyle(
-                                              fontSize: 20
-                                          ),),
-
-                                      ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    flex: 3,
-                                    child: Container(
-                                      padding: EdgeInsets.only(left: 10,right: 10,bottom: 6,top: 6),
-                                      color: Colors.white,
-                                      child: Text("100"),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child:Container(
-                                      decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(5),
-                                          shape: BoxShape.rectangle,
-                                          color: Colors.black38
-                                      ),
-                                      child: IconButton(
-
-                                        onPressed: () {
-
-                                        },
-                                        icon: Text("-",style: TextStyle(
-                                            fontSize: 20
-                                        ),)
-
-                                      ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: IconButton(
-                                        onPressed: () {
-
-                                        },
-                                        icon: Icon(Icons.delete,size: 40,)),
-                                  )
-                                  ],
+                                  },)
                               ),
-                            )
-                          ],
-                        ))
-                      ],
-                    ),
+                              SizedBox(width: 10,),
+                              Expanded(child: Column(
+                                children: [
+                                  Text("${controller.cart[index].book.nameBook}"),
+                                  SizedBox(height: 20,),
+                                  Row(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text("${controller.cart[index].book.price}",style: TextStyle(fontSize: 17,color: Colors.orangeAccent,),),
+                                      SizedBox(width: 15,),
+                                      Text("99.000 đ",style: TextStyle(fontSize: 14,color: Colors.grey,decoration: TextDecoration.lineThrough),),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 20),
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          child:Container(
+                                            decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.circular(5),
+                                                shape: BoxShape.rectangle,
+                                                color: Colors.black38
+                                            ),
+                                            child: IconButton(
+
+                                              onPressed: () {
+
+                                              },
+                                              icon: Text("+",style: TextStyle(
+                                                  fontSize: 20
+                                              ),),
+
+                                            ),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          flex: 3,
+                                          child: Container(
+                                            padding: EdgeInsets.only(left: 10,right: 10,bottom: 6,top: 6),
+                                            color: Colors.white,
+                                            child: Text("100"),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child:Container(
+                                            decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.circular(5),
+                                                shape: BoxShape.rectangle,
+                                                color: Colors.black38
+                                            ),
+                                            child: IconButton(
+
+                                                onPressed: () {
+
+                                                },
+                                                icon: Text("-",style: TextStyle(
+                                                    fontSize: 20
+                                                ),)
+
+                                            ),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: IconButton(
+                                              onPressed: () {
+
+                                              },
+                                              icon: Icon(Icons.delete,size: 40,)),
+                                        )
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ))
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                    itemCount: CartController.controller.cart.length,
                   ),
               ],
             ),

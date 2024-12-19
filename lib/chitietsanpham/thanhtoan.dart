@@ -1,11 +1,24 @@
-import 'dart:collection';
-
-import 'package:book_store/chitietsanpham/xacnhanthanhtoan.dart';
+import 'package:book_store/chitietsanpham/xacnhan.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-class Thanhtoan extends StatelessWidget {
-  const Thanhtoan({super.key});
+class ThanhToan extends StatelessWidget {
+  const ThanhToan({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return GetMaterialApp(
+      home: PageThanhtoan(),
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueAccent),
+        useMaterial3: true,
+      ),
+      debugShowCheckedModeBanner: false,
+    );
+  }
+}
+
+class PageThanhtoan extends StatelessWidget {
+  const PageThanhtoan({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,11 +32,7 @@ class Thanhtoan extends StatelessWidget {
             ),
 
             onPressed: () {
-              Navigator.push(context,
-                MaterialPageRoute(
-                    builder: (context) => XacNhanThanhToan(),
-                )
-              );
+              Get.to(Pagexacnhan());
             },
             child: Text("Xác nhận địa chỉ",style: TextStyle(fontSize: 23,fontWeight: FontWeight.bold,color: Colors.white),)),
       ),
@@ -31,6 +40,12 @@ class Thanhtoan extends StatelessWidget {
         iconTheme: IconThemeData(
           color: Colors.white,
            size: 40
+        ),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+
+          },
         ),
         backgroundColor: Colors.orange,
         title: Text("Thông tin giao hàng",style: TextStyle(fontWeight: FontWeight.w900,fontSize: 25,color: Colors.white),),

@@ -2,33 +2,39 @@ import 'package:book_store/chitietsanpham/kiemtraxacnhan.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class XacNhanThanhToan extends StatelessWidget {
-  const XacNhanThanhToan({super.key});
+class Xacnhan extends StatelessWidget {
+  const Xacnhan({super.key});
 
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueAccent),
         useMaterial3: true,
       ),
-      home:PageXacNhanThanhToan()
+      debugShowCheckedModeBanner: false,
+      home: Pagexacnhan(),
     );
   }
 }
-class PageXacNhanThanhToan extends StatelessWidget {
-  const PageXacNhanThanhToan({super.key});
+class Pagexacnhan extends StatelessWidget {
+  const Pagexacnhan({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(
-          color: Colors.white
+            color: Colors.white
         ),
         backgroundColor: Colors.orange,
         title: Text("Thông tin giao hàng",style: TextStyle(fontWeight: FontWeight.w900,fontSize: 25,color: Colors.white),),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Get.back(); // Quay lại màn hình trước đó
+          },
+        ),
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(20),
@@ -203,5 +209,4 @@ class PageXacNhanThanhToan extends StatelessWidget {
 
   }
 }
-
 

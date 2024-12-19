@@ -19,12 +19,21 @@ class SignUpController {
     if (password != confirmPassword) {
       return Future.error('Passwords không khớp');
     }
-
     try {
-      // Mỗi response xem như 1 dòng dữ liệu trong table user
-      final response = await supabase.from('user').select('id'); // Lấy tất cả ID
-      final count = (response as List).length; // Đếm số lượng ID
-      final newId = count + 1; // Tạo ID mới bằng số lượng hiện tại + 1
+      final checkUsername = await supabase
+          .from('user')
+          .select('id')
+          .eq('username', username) 
+          .limit(1)
+          .maybeSingle();
+
+      if (checkUsername != null) {
+        return Future.error('Tên đăng nhập đã tồn tại. Vui lòng chọn tên khác.');
+      }
+
+      final response = await supabase.from('user').select('id');
+      final count = (response as List).length;
+      final newId = count + 1;
 
       await supabase.from('user').insert({
         'id': newId,
@@ -35,8 +44,8 @@ class SignUpController {
       });
 
       return true;
-    } catch (error) {
-      return Future.error('Đăng ký Thất bại');
+    }  catch (error) {
+      return Future.error('Đăng ký thất bại: $error');
     }
   }
 }

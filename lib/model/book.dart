@@ -1,49 +1,69 @@
-import 'package:supabase_flutter/supabase_flutter.dart';
 
-class Book{
-  int id;
-  String ten;
+class Book {
+  final int id;
+  final String nameBook;
+  final DateTime publicationDate;
+  final String author;
+  final String publisher;
+  final int categoryID;
+  final double price;
+  final String description;
+  final int stock_quantity;
+  final String image;
+  final String language;
 
-  Book({
+  const Book({
     required this.id,
-    required this.ten,
+    required this.nameBook,
+    required this.publicationDate,
+    required this.author,
+    required this.publisher,
+    required this.categoryID,
+    required this.price,
+    required this.description,
+    required this.stock_quantity,
+    required this.image,
+    required this.language,
   });
-  factory Book.fromMap(Map<String, dynamic> map) {
-    return Book(
-      id: map['id'] as int,
-      ten: map['shipping_address'] as String,
-    );
-  }
 
-  Map<String,dynamic> toMap(){
+  // Chuyển đối tượng Book thành Map (dùng cho lưu vào cơ sở dữ liệu)
+  Map<String, dynamic> toMap() {
     return {
-      'id':this.id,
-      'shipping_address':this.ten,
+      'id': id,
+      'nameBook': nameBook,
+      'publicationDate': publicationDate.toIso8601String(), // Chuyển DateTime sang String ISO8601
+      'author': author,
+      'publisher': publisher,
+      'categoryID': categoryID,
+      'price': price,
+      'description': description,
+      'stock_quantity': stock_quantity,
+      'image': image,
+      'language': language,
     };
   }
 
+  // Tạo đối tượng Book từ Map (dùng cho truy vấn cơ sở dữ liệu)
+  factory Book.fromMap(Map<String, dynamic> map) {
+    return Book(
+      id: map['id'] != null ? map['id'] as int : 0,
+      nameBook: map['nameBook'] ?? 'Unknown',
+      publicationDate: map['publicationDate'] != null
+          ? DateTime.tryParse(map['publicationDate']) ?? DateTime.now()
+          : DateTime.now(),
+      author: map['author'] ?? 'Unknown',
+      publisher: map['publisher'] ?? 'Unknown',
+      categoryID: map['categoryID'] != null ? map['categoryID'] as int : 0,
+      price: map['price'] != null
+          ? (map['price'] is int
+          ? (map['price'] as int).toDouble()
+          : map['price'] as double)
+          : 0.0,
+      description: map['description'] ?? 'No description',
+      stock_quantity: map['stock_quantity'] != null ? map['stock_quantity'] as int : 0,
+      image: map['image'] ?? 'https://via.placeholder.com/150', // Ảnh mặc định nếu null
+      language: map['language'] ?? 'Unknown',
+    );
+  }
 
 }
-
-class Book_Snapshot{
-  Book book;
-  Book_Snapshot({required this.book});
-  Future<void> delete () async{
-    final supabase=Supabase.instance.client;
-    await supabase.from("order").delete().eq("id",book.id);
-  }
-  Future<void> update(Book nFruit)async{
-    final supabase=Supabase.instance.client;
-    await supabase.from("order").update(nFruit.toMap()).eq("id",book.id);
-  }
-  static Future<void> insert(Book nfruit)async{
-    final supabase=Supabase.instance.client;
-    await supabase.from("order").insert(nfruit.toMap());
-  }
-  static Future<List<Book_Snapshot>> getAll()async{
-    final supabase=Supabase.instance.client;
-    var data=await supabase.from("order").select();
-    return data.map((e) => Book_Snapshot(book: Book.fromMap(e)),).toList();
-  }
-}
-

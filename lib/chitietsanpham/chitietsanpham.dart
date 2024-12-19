@@ -1,38 +1,124 @@
+import 'package:book_store/controller/cart_controller.dart';
+import 'package:book_store/model/book.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 class Chitietsanpham extends StatelessWidget {
-  const Chitietsanpham({super.key});
-
+   Chitietsanpham({super.key});
+  final controller=Get.put(GetXControllerIDCart());
   @override
   Widget build(BuildContext context) {
+    final arg=(ModalRoute.of(context)!.settings.arguments) as Book;
     return Scaffold(
-      bottomNavigationBar: Row(
-        children: [
-          Expanded(
-            child: Container(
-              height: 100,
-              color: Colors.white,
-              child:Text("Số lượng") ,
-            )
+      bottomNavigationBar: Container(
+        height: 70,
+        child: Container(
+        color: Colors.white,
+          child: Row(
+            children: [
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 15,right: 15),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Expanded(
+                            child:Container(
+                              width: 20,
+                              height: 30,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5),
+                                  shape: BoxShape.rectangle,
+                                  color: Colors.black38
+                              ),
+                              child: IconButton(
+                                iconSize: 20,
+                                onPressed: () {
+                                  controller.increase();
+                                },
+                                icon: Icon(Icons.add)
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 3,
+                            child: Container(
+                              padding: EdgeInsets.only(left: 10,right: 10,bottom: 6,top: 6),
+                              color: Colors.white,
+                              child: GetBuilder(
+                                init: controller,
+                                id: "count",
+                                builder: (controller) {
+                                  return Text("${controller.count}");
+                                },
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child:Container(
+                              height: 30,
+                              width: 20,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5),
+                                  shape: BoxShape.rectangle,
+                                  color: Colors.black38,
+                              ),
+                              child: IconButton(
+                                iconSize: 20,
+                                  onPressed: () {
+                                    controller.decrease();
+                                  },
+                                  icon: Icon(Icons.remove)
+
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                )
+              ),
+              Expanded(
+                  child: Container(
+                    alignment: Alignment.center,
+                    height: 70,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.rectangle,
+                      color: Colors.white,
+                    ),
+                    child: GestureDetector(
+                      onTap: () {
+                        CartController.controller.addToCart(arg,controller.count);
+                      },
+                      child:Text("Thêm vào giỏ hàng",style: TextStyle(fontSize: 20,color: Colors.orange)) ,
+                    ),
+                  )
+              ),
+              Expanded(
+                  child: Container(
+                    alignment: Alignment.center,
+                    height: 70,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.rectangle,
+                      color: Colors.orange
+                    ),
+                    child: GestureDetector(
+                      child:Text("Mua ngay",style: TextStyle(fontSize: 20,color: Colors.white),) ,
+                    ),
+                  )
+              ),
+            ],
           ),
-          Expanded(
-              child: Container(
-                height: 100,
-                color: Colors.red,
-                child:Text("Thêm vào giỏ hàng") ,
-              )
-          ),
-          Expanded(
-              child: Container(
-                height: 100,
-                color: Colors.orange,
-                child:Text("Mua ngay") ,
-              )
-          ),
-        ],
+        ),
       ),
       appBar: AppBar(
+        backgroundColor: Colors.orange,
         actions: [
           IconButton(
               onPressed: () {
@@ -74,12 +160,12 @@ class Chitietsanpham extends StatelessWidget {
                       return Container(
                           width: MediaQuery.of(context).size.width,
                           margin: EdgeInsets.symmetric(horizontal: 5.0),
+                          padding: EdgeInsets.all(10),
                           decoration: BoxDecoration(
-                              color: Colors.amber
+                              color: Colors.white
                           ),
                           child: FittedBox(
-                              child: Image.network("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQssqDqtb8e2Xu3B44Nxoir1bFp2o4dq_VouQ&s"),
-                              fit: BoxFit.fill,
+                              child: Image.network("${arg.image}"),
                           )
                       );
                     },
@@ -92,13 +178,13 @@ class Chitietsanpham extends StatelessWidget {
                   crossAxisAlignment: WrapCrossAlignment.center,
                   spacing: 10,
                   children: [
-                    Text("129.940 đ",style: TextStyle(fontSize: 30,color: Colors.red,fontWeight: FontWeight.w900),),
+                    Text("${arg.price} \$ ",style: TextStyle(fontSize: 30,color: Colors.red,fontWeight: FontWeight.w900),),
                     Text("178.000",style: TextStyle(fontSize:20,color: CupertinoColors.systemGrey2,decoration: TextDecoration.lineThrough),),
                     Text("-27%",style: TextStyle(color: Colors.red),)
                   ],
                 ),
               ),
-              Text("Destination B1 - Grammar And Vocabulary With Answer Key (Tái bản 2024)"),
+              Text(arg.nameBook,style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold),),
               Padding(
                 padding: const EdgeInsets.only(top: 10,bottom: 10),
                 child: Row(
@@ -108,7 +194,7 @@ class Chitietsanpham extends StatelessWidget {
                       width: 10,
                     ),
                     Expanded(
-                      child: Text("Đã bán 76"),
+                      child: Text("Đã bán ${arg.stock_quantity}"),
                       flex: 2,
                     ),
                     IconButton(
@@ -127,11 +213,13 @@ class Chitietsanpham extends StatelessWidget {
                   spacing: 20,
                   children: [
                     Text("Thông tin sản phẩm",style: TextStyle(fontWeight: FontWeight.bold),),
-                    infor("Mã hàng", "123456789"),
-                    infor("Nhà cung cấp", "MC Books"),
-                    infor("Tác giả", "Steve"),
-                    infor("Người dịch", "Nguyễn Thanh Vân"),
-                    infor("Nhà xuất bản", "Hồng Đức"),
+                    infor("Mã hàng","${arg.id}"),
+                    infor("Tác giả", "${arg.author}"),
+                    infor("Nhà xuất bản", "${arg.publisher}"),
+                    infor("Ngày xuất bản", "${ DateFormat('dd-MM-yyyy').format(arg.publicationDate)}"),
+                    infor("Ngôn ngữ", "${arg.language}"),
+                    infor("Thể loại", "${arg.categoryID}"),
+                    infor("Mô tả", "${arg.description}"),
                   ],
                 ),
               ),

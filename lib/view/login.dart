@@ -8,9 +8,8 @@ import 'package:book_store/chitietsanpham/thongbaothanhtoanthanhcong.dart';
 import 'package:book_store/chitietsanpham/xacnhanthanhtoan.dart';
 import 'package:book_store/view/signUp.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:book_store/controller/login_controller.dart';
-import 'home.dart'; // Trang chính sau khi đăng nhập
+import 'home.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -21,7 +20,6 @@ class _LoginPageState extends State<LoginPage> {
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
   final LoginController _loginController = LoginController();
-  bool _isLoading = false;
 
   void _handleLogin() async {
     if (_usernameController.text.isEmpty || _passwordController.text.isEmpty) {
@@ -30,18 +28,12 @@ class _LoginPageState extends State<LoginPage> {
       );
       return;
     }
-
-    setState(() {
-      _isLoading = true;
-    });
-
     try {
       await _loginController.login(
         username: _usernameController.text.trim(),
         password: _passwordController.text.trim(),
         context: context,
       );
-
       // Chuyển hướng đến HomePage
       Navigator.pushReplacement(
         context,
@@ -51,10 +43,6 @@ class _LoginPageState extends State<LoginPage> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(error.toString())),
       );
-    } finally {
-      setState(() {
-        _isLoading = false;
-      });
     }
   }
 
@@ -69,12 +57,12 @@ class _LoginPageState extends State<LoginPage> {
           children:[
           buildNavigateButton(context,title: "Chi tiết sản phẩm",destination:Chitietsanpham()),
           buildNavigateButton(context,title: "Giỏ hàng",destination:GioHang()),
-          buildNavigateButton(context,title: "Thanh toán",destination:Thanhtoan()),
-          buildNavigateButton(context,title: "Xác nhận Thanh toán",destination:XacNhanThanhToan()),
+          buildNavigateButton(context,title: "Thanh toán",destination:ThanhToan()),
+          buildNavigateButton(context,title: "Xác nhận Thanh toán",destination:PageXacNhanThanhToan()),
           buildNavigateButton(context,title: "Kiểm tra xác nhận Thanh toán",destination:KiemTraXacNhan()),
           buildNavigateButton(context,title: "Thông báo đặt hàng thành công",destination:Thongbaothanhtoanthanhcong()),
             buildNavigateButton(context,title: "Danh mục",destination:Danhmuc()),
-            buildNavigateButton(context,title: "Supabase",destination:SupabaseApp()),
+            buildNavigateButton(context,title: "Home",destination:HomePage()),
             TextField(
               controller: _usernameController,
               decoration: const InputDecoration(labelText: 'Username'),
@@ -85,9 +73,7 @@ class _LoginPageState extends State<LoginPage> {
               obscureText: true,
             ),
             const SizedBox(height: 20),
-            _isLoading
-                ? const CircularProgressIndicator()
-                : ElevatedButton(
+            ElevatedButton(
               onPressed: _handleLogin,
               child: const Text('Login'),
             ),
@@ -101,9 +87,7 @@ class _LoginPageState extends State<LoginPage> {
               child: Text('Create an Account'),
             ),
           ],
-
         ),
-
       ),
     );
   }
