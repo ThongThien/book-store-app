@@ -1,3 +1,4 @@
+import 'package:book_store/chitietsanpham/chitietsanpham.dart';
 import 'package:book_store/view/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -99,9 +100,10 @@ class _HomePageState extends State<HomePage> {
                 final book = books[index];
                 return GestureDetector(
                     onTap: () {
-                      Navigator.push(
+                      Navigator.pushNamed(
                         context,
-                        MaterialPageRoute(builder: (context) => const BookDetailsPage()),
+                        'chitiet',
+                        arguments: book
                       );
                     },
                   child: Container(

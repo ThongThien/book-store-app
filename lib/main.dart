@@ -1,3 +1,4 @@
+import 'package:book_store/chitietsanpham/chitietsanpham.dart';
 import 'package:book_store/view/home.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -25,9 +26,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Book Store',
       theme: ThemeData(primarySwatch: Colors.blue),
       home: LoginPage(),
+      routes: {
+        'chitiet':(context)=>Chitietsanpham()
+      },
     );
   }
 }
