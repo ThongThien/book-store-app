@@ -16,17 +16,17 @@ class LoginController {
     }
 
     try {
-      final response = await supabase
+      final login_user_pass_supabase = await supabase
           .from('user')
           .select()
           .eq('username', username)
           .eq('password', password)
-          .single();
+          .maybeSingle();
 
-      if (response != null) {
-        final role = response['role'];
-        final id = response['id'].toString();
-        // Lưu thông tin vào UserProvider
+      if (login_user_pass_supabase != null) {
+        final role = login_user_pass_supabase['role'];
+        final id = login_user_pass_supabase['id'].toString();
+
         Provider.of<UserProvider>(context, listen: false).setUser(role, id);
       } else {
         throw Exception('Tên đăng nhập hoặc mật khẩu không đúng');

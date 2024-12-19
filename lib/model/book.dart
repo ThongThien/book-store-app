@@ -4,7 +4,7 @@ class Book {
   final DateTime publicationDate;
   final String author;
   final String publisher;
-  final String category;
+  final int categoryID;
   final double price;
   final String description;
   final int stock_quantity;
@@ -17,7 +17,7 @@ class Book {
     required this.publicationDate,
     required this.author,
     required this.publisher,
-    required this.category,
+    required this.categoryID,
     required this.price,
     required this.description,
     required this.stock_quantity,
@@ -33,7 +33,7 @@ class Book {
       'publicationDate': publicationDate.toIso8601String(), // Chuyển DateTime sang String ISO8601
       'author': author,
       'publisher': publisher,
-      'category': category,
+      'categoryID': categoryID,
       'price': price,
       'description': description,
       'stock_quantity': stock_quantity,
@@ -45,17 +45,24 @@ class Book {
   // Tạo đối tượng Book từ Map (dùng cho truy vấn cơ sở dữ liệu)
   factory Book.fromMap(Map<String, dynamic> map) {
     return Book(
-      id: map['id'] as int,
-      nameBook: map['nameBook'] as String,
-      publicationDate: DateTime.parse(map['publicationDate']),
-      author: map['author'] as String,
-      publisher: map['publisher'] as String,
-      category: map['category'] as String,
-      price: map['price'] is int ? (map['price'] as int).toDouble() : map['price'] as double, // Đảm bảo chuyển từ int sang double nếu cần
-      description: map['description'] as String,
-      stock_quantity: map['stock_quantity'] as int,
-      image: map['image'] as String,
-      language: map['language'] as String,
+      id: map['id'] != null ? map['id'] as int : 0,
+      nameBook: map['nameBook'] ?? 'Unknown',
+      publicationDate: map['publicationDate'] != null
+          ? DateTime.tryParse(map['publicationDate']) ?? DateTime.now()
+          : DateTime.now(),
+      author: map['author'] ?? 'Unknown',
+      publisher: map['publisher'] ?? 'Unknown',
+      categoryID: map['categoryID'] != null ? map['categoryID'] as int : 0,
+      price: map['price'] != null
+          ? (map['price'] is int
+          ? (map['price'] as int).toDouble()
+          : map['price'] as double)
+          : 0.0,
+      description: map['description'] ?? 'No description',
+      stock_quantity: map['stock_quantity'] != null ? map['stock_quantity'] as int : 0,
+      image: map['image'] ?? 'https://via.placeholder.com/150', // Ảnh mặc định nếu null
+      language: map['language'] ?? 'Unknown',
     );
   }
+
 }

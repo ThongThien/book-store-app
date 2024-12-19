@@ -1,8 +1,7 @@
-import 'package:book_store/controller/book_controller.dart';
+import 'package:book_store/view/userInfo.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:provider/provider.dart';
+import '../controller/book_controller.dart';
 import '../model/book.dart';
 import 'details.dart';
 
@@ -16,11 +15,22 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final BookController _controller = BookController();
   late Future<List<Book>> _bookFuture;
+  String _searchQuery = '';
 
   @override
   void initState() {
     super.initState();
-    _bookFuture = _controller.Book_Snapshot();
+    _fetchBooks();
+  }
+
+  void _fetchBooks() {
+    setState(() {
+      if (_searchQuery.isEmpty) {
+        _bookFuture = _controller.Book_Snapshot(); // Lấy tất cả sách
+      } else {
+        _bookFuture = _controller.searchBooks(_searchQuery); // Tìm kiếm sách
+      }
+    });
   }
 
   @override
@@ -35,7 +45,10 @@ class _HomePageState extends State<HomePage> {
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10.0),
                 child: TextField(
-                  onChanged: (value) {},
+                  onChanged: (value) {
+                    _searchQuery = value.trim();
+                    _fetchBooks(); // Gọi hàm tìm kiếm
+                  },
                   decoration: InputDecoration(
                     hintText: 'Search books...',
                     filled: true,
@@ -48,7 +61,16 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
-            const Icon(Icons.person),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const UserPage()),
+                );
+              },
+              child: const Icon(Icons.person),
+            ),
+
           ],
         ),
       ),
@@ -62,25 +84,26 @@ class _HomePageState extends State<HomePage> {
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
             return const Center(child: Text("No books found."));
           }
-
           final books = snapshot.data!;
-
           return Padding(
             padding: const EdgeInsets.all(10.0),
             child: GridView.builder(
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2, // Số cột trong grid
-                crossAxisSpacing: 10.0, // Khoảng cách ngang giữa các ô
-                mainAxisSpacing: 10.0, // Khoảng cách dọc giữa các ô
-                childAspectRatio: 0.6, // Tỉ lệ giữa chiều rộng và chiều cao
+                crossAxisCount: 2,
+                crossAxisSpacing: 10.0,
+                mainAxisSpacing: 10.0,
+                childAspectRatio: 0.6,
               ),
               itemCount: books.length,
               itemBuilder: (context, index) {
                 final book = books[index];
                 return GestureDetector(
-                  onTap: () {
-                    Get.to(BookDetailsPage());
-                  },
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const BookDetailsPage()),
+                      );
+                    },
                   child: Container(
                     decoration: BoxDecoration(
                       border: Border.all(color: Colors.grey.shade300),
@@ -88,20 +111,19 @@ class _HomePageState extends State<HomePage> {
                     ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      // Căn giữa nội dung trong ô
                       children: [
                         Expanded(
-                          flex: 7, // Tỉ lệ không gian cho ảnh
+                          flex: 7,
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Image.network(
                               book.image,
-                              fit: BoxFit.contain, // Giữ nguyên tỉ lệ ảnh
+                              fit: BoxFit.contain,
                             ),
                           ),
                         ),
                         Expanded(
-                          flex: 3, // Tỉ lệ không gian cho text
+                          flex: 3,
                           child: Padding(
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 8.0),

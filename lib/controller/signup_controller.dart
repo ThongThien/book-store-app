@@ -20,6 +20,17 @@ class SignUpController {
       return Future.error('Passwords không khớp');
     }
     try {
+      final checkUsername = await supabase
+          .from('user')
+          .select('id')
+          .eq('username', username) 
+          .limit(1)
+          .maybeSingle();
+
+      if (checkUsername != null) {
+        return Future.error('Tên đăng nhập đã tồn tại. Vui lòng chọn tên khác.');
+      }
+
       final response = await supabase.from('user').select('id');
       final count = (response as List).length;
       final newId = count + 1;

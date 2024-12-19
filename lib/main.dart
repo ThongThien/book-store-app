@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Book Store',
       theme: ThemeData(primarySwatch: Colors.blue),
-      home: HomePage(),
+      home: LoginPage(),
     );
   }
 }

@@ -12,7 +12,6 @@ class _LoginPageState extends State<LoginPage> {
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
   final LoginController _loginController = LoginController();
-  bool _isLoading = false;
 
   void _handleLogin() async {
     if (_usernameController.text.isEmpty || _passwordController.text.isEmpty) {
@@ -21,11 +20,6 @@ class _LoginPageState extends State<LoginPage> {
       );
       return;
     }
-
-    setState(() {
-      _isLoading = true;
-    });
-
     try {
       await _loginController.login(
         username: _usernameController.text.trim(),
@@ -41,10 +35,6 @@ class _LoginPageState extends State<LoginPage> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(error.toString())),
       );
-    } finally {
-      setState(() {
-        _isLoading = false;
-      });
     }
   }
 
@@ -67,9 +57,7 @@ class _LoginPageState extends State<LoginPage> {
               obscureText: true,
             ),
             const SizedBox(height: 20),
-            _isLoading
-                ? const CircularProgressIndicator()
-                : ElevatedButton(
+            ElevatedButton(
               onPressed: _handleLogin,
               child: const Text('Login'),
             ),
