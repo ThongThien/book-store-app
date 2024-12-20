@@ -1,38 +1,37 @@
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:book_store/provider/user_provider.dart';
+import 'package:get/get.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import '../view/home.dart';
+import 'user_controller.dart';
 
-class LoginController {
+class LoginController extends GetxController {
+  var username = ''.obs;
+  var password = ''.obs;
   final supabase = Supabase.instance.client;
 
-  Future<void> login({
-    required String username,
-    required String password,
-    required BuildContext context,
-  }) async {
+  Future<void> login() async {
     if (username.isEmpty || password.isEmpty) {
-      throw Exception('Vui lòng điền đầy đủ thông tin');
+      Get.snackbar('Lỗi', 'Vui lòng điền đầy đủ thông tin');
+      return;
     }
 
     try {
       final login_user_pass_supabase = await supabase
           .from('user')
           .select()
-          .eq('username', username)
-          .eq('password', password)
+          .eq('username', username.value)
+          .eq('password', password.value)
           .maybeSingle();
 
       if (login_user_pass_supabase != null) {
-        final role = login_user_pass_supabase['role'];
         final id = login_user_pass_supabase['id'].toString();
-
-        Provider.of<UserProvider>(context, listen: false).setUser(role, id);
+        Get.find<UserController>().setUser(id);
+        Get.snackbar('Thành công', 'Đăng nhập thành công');
+        Get.to(() => HomePage());
       } else {
-        throw Exception('Tên đăng nhập hoặc mật khẩu không đúng');
+        Get.snackbar('Lỗi', 'Tên đăng nhập hoặc mật khẩu không đúng');
       }
     } catch (error) {
-      throw Exception('Có lỗi xảy ra: $error');
+      Get.snackbar('Lỗi', 'Có lỗi xảy ra: $error');
     }
   }
 }

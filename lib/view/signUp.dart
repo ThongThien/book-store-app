@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:book_store/controller/signup_controller.dart';
+import '../model/user.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -10,11 +10,12 @@ class SignUpPage extends StatefulWidget {
 
 class _SignUpPageState extends State<SignUpPage> {
   final _formKey = GlobalKey<FormState>();
-  final _usernameController = TextEditingController();
-  final _passwordController = TextEditingController();
-  final _confirmPasswordController = TextEditingController();
-  final _emailController = TextEditingController();
-  final SignUpController _signUpController = SignUpController();
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+
+  final SignUpController controller = SignUpController.controller;
   bool _isLoading = false;
 
   void _handleSignUp() async {
@@ -27,7 +28,7 @@ class _SignUpPageState extends State<SignUpPage> {
     });
 
     try {
-      final result = await _signUpController.signUp(
+      final result = await controller.signUp(
         username: _usernameController.text.trim(),
         password: _passwordController.text.trim(),
         confirmPassword: _confirmPasswordController.text.trim(),
@@ -50,8 +51,6 @@ class _SignUpPageState extends State<SignUpPage> {
       });
     }
   }
-//Hàm _buildTextField để giảm lặp lại mã và dễ dàng tái sử dụng
-// cấu trúc của các trường nhập liệu (TextFormField) trong giao diện
   Widget _buildTextField({
     required TextEditingController controller,
     required String label,

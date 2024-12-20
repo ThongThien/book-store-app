@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import '../controller/user_controller.dart';
-import '../provider/user_provider.dart';
 import 'login.dart';
 import 'orderDetails.dart';
 
@@ -13,33 +13,26 @@ class UserPage extends StatefulWidget {
 }
 
 class _UserPageState extends State<UserPage> {
-  final UserController _controller = UserController();
-  Map<String, dynamic>? _userData; // Chứa thông tin user và hóa đơn
+  final UserController userController = Get.find<UserController>();
+  Map<String, dynamic>? _userData;
 
   @override
   void initState() {
     super.initState();
-    _fetchUserData();
+    _userDataSnapshot();
   }
 
-  void _fetchUserData() async {
-    final userProvider = Provider.of<UserProvider>(context, listen: false);
-    try {
-      final data =
-          await _controller.getUserWithOrders(int.parse(userProvider.id));
-      setState(() {
-        _userData = data;
-      });
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error fetching user data: $e')),
-      );
-    }
+  void _userDataSnapshot() async {
+    final data = await userController
+        .getUserWithOrders(int.parse(userController.userId.value));
+    setState(() {
+      _userData = data;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    final userProvider = Provider.of<UserProvider>(context);
+    final UserController userController = Get.find<UserController>();
 
     return Scaffold(
       appBar: AppBar(
@@ -65,7 +58,7 @@ class _UserPageState extends State<UserPage> {
                 ),
                 const SizedBox(height: 20),
                 Text(
-                  'User ID: ${userProvider.id}',
+                  'User ID: ${userController.userId.value}',
                   style: const TextStyle(fontSize: 18),
                 ),
                 const SizedBox(height: 5),
@@ -117,7 +110,7 @@ class _UserPageState extends State<UserPage> {
                           context,
                           MaterialPageRoute(
                             builder: (context) =>
-                                OrderDetailPage(orderId: order['id']),
+                                OrderDetailPage(orderID: order['id']),
                           ),
                         );
                       },
@@ -129,7 +122,7 @@ class _UserPageState extends State<UserPage> {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                userProvider.clearUser();
+                userController.clearUser();
                 Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(builder: (context) => LoginPage()),

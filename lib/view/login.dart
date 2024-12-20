@@ -1,107 +1,50 @@
-import 'package:book_store/chitietsanpham/chitietsanpham.dart';
-import 'package:book_store/chitietsanpham/danhmuc.dart';
-import 'package:book_store/chitietsanpham/giohang.dart';
-import 'package:book_store/chitietsanpham/kiemtraxacnhan.dart';
-import 'package:book_store/chitietsanpham/supabase.dart';
-import 'package:book_store/chitietsanpham/thanhtoan.dart';
-import 'package:book_store/chitietsanpham/thongbaothanhtoanthanhcong.dart';
-import 'package:book_store/chitietsanpham/xacnhanthanhtoan.dart';
-import 'package:book_store/view/signUp.dart';
-import 'package:flutter/material.dart';
 import 'package:book_store/controller/login_controller.dart';
-import 'home.dart';
+import 'package:book_store/controller/user_controller.dart';
+import 'package:book_store/view/signUp.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
-class LoginPage extends StatefulWidget {
-  @override
-  _LoginPageState createState() => _LoginPageState();
-}
-
-class _LoginPageState extends State<LoginPage> {
-  final _usernameController = TextEditingController();
-  final _passwordController = TextEditingController();
-  final LoginController _loginController = LoginController();
-
-  void _handleLogin() async {
-    if (_usernameController.text.isEmpty || _passwordController.text.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Vui lòng điền đầy đủ thông tin')),
-      );
-      return;
-    }
-    try {
-      await _loginController.login(
-        username: _usernameController.text.trim(),
-        password: _passwordController.text.trim(),
-        context: context,
-      );
-      // Chuyển hướng đến HomePage
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => HomePage()),
-      );
-    } catch (error) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(error.toString())),
-      );
-    }
-  }
+class LoginPage extends StatelessWidget {
+  final LoginController loginController = Get.put(LoginController());
+  final UserController userController = Get.put(UserController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Login')),
+      appBar: AppBar(
+        title: Text("LOGIN"),
+      ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(10.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children:[
-          buildNavigateButton(context,title: "Chi tiết sản phẩm",destination:Chitietsanpham()),
-          buildNavigateButton(context,title: "Giỏ hàng",destination:GioHang()),
-          buildNavigateButton(context,title: "Thanh toán",destination:ThanhToan()),
-          buildNavigateButton(context,title: "Xác nhận Thanh toán",destination:PageXacNhanThanhToan()),
-          buildNavigateButton(context,title: "Kiểm tra xác nhận Thanh toán",destination:KiemTraXacNhan()),
-          buildNavigateButton(context,title: "Thông báo đặt hàng thành công",destination:Thongbaothanhtoanthanhcong()),
-            buildNavigateButton(context,title: "Danh mục",destination:Danhmuc()),
-            buildNavigateButton(context,title: "Home",destination:HomePage()),
+          children: [
             TextField(
-              controller: _usernameController,
-              decoration: const InputDecoration(labelText: 'Username'),
+              onChanged: (value) => loginController.username.value = value,
+              decoration: InputDecoration(
+                  labelText: "Username", border: OutlineInputBorder()),
             ),
+            SizedBox(height: 20,),
             TextField(
-              controller: _passwordController,
-              decoration: const InputDecoration(labelText: 'Password'),
-              obscureText: true,
+              onChanged: (value) => loginController.password.value = value,
+              decoration: InputDecoration(labelText: "Password",border: OutlineInputBorder()),
             ),
-            const SizedBox(height: 20),
+            SizedBox(
+              height: 20,
+            ),
             ElevatedButton(
-              onPressed: _handleLogin,
-              child: const Text('Login'),
+              onPressed: () => loginController.login(),
+              child: Text("Login"),
             ),
             TextButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => SignUpPage()),
-                );
-              },
-              child: Text('Create an Account'),
-            ),
+                onPressed: () {
+                  Get.to(() => SignUpPage());
+                },
+                child: Text("Sign Up"))
           ],
         ),
-      ),
-    );
-  }
-  Widget buildNavigateButton(BuildContext context,{required String title,required Widget destination}) {
-    return Container(
-      width: 250,
-
-      child: ElevatedButton(
-          onPressed: (){
-            Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => destination,)
-            )   ;
-          },
-          child:  Text(title)
       ),
     );
   }

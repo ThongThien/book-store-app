@@ -1,8 +1,17 @@
+import 'package:get/get.dart';
+import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-
 import '../model/user.dart';
 
-class UserController {
+class UserController extends GetxController {
+  var userId = ''.obs;
+  void setUser(String id) {
+    userId.value = id;
+  }
+  void clearUser() {
+    userId.value = '';
+  }
+
   final SupabaseClient _client = Supabase.instance.client;
 
   Future<Map<String, dynamic>> getUserWithOrders(int userId) async {
@@ -40,4 +49,5 @@ class UserController {
       throw Exception('Lỗi khi lấy chi tiết hóa đơn: $e');
     }
   }
+
 }

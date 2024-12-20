@@ -1,67 +1,54 @@
+import 'package:book_store/controller/user_controller.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../controller/user_controller.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
-class OrderDetailPage extends StatefulWidget {
-  final int orderId;
+class OrderDetailPage extends StatelessWidget {
+  final UserController userController = Get.put(UserController());
+  late final int orderID;
 
-  const OrderDetailPage({super.key, required this.orderId});
-
-  @override
-  State<OrderDetailPage> createState() => _OrderDetailPageState();
-}
-
-class _OrderDetailPageState extends State<OrderDetailPage> {
-  final UserController _controller = UserController();
-  late Future<List<Map<String, dynamic>>> _orderDetails;
-
-  @override
-  void initState() {
-    super.initState();
-    _orderDetails = _controller.getOrderDetails(widget.orderId);
-  }
+  OrderDetailPage({
+    required this.orderID,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Order Details'),
-      ),
-      body: FutureBuilder<List<Map<String, dynamic>>>(
-        future: _orderDetails,
-        builder: (context, snapshot) {
-          final orderItems = snapshot.data!;
-          return ListView.builder(
-            itemCount: orderItems.length,
-            itemBuilder: (context, index) {
-              final item = orderItems[index];
-              final book = item['book'];
+        appBar: AppBar(
+          title: Text("Order details"),
+        ),
+        body: FutureBuilder<List<Map<String, dynamic>>>(
+          future: userController.getOrderDetails(orderID),
+          builder: (context, snapshot) {
+            if (!snapshot.hasData || snapshot.data!.isEmpty) {
+              return const Center(child: Text('No details found.'));
+            }
+            final orderDetails = snapshot.data!;
+            return ListView.builder(
+              itemCount: orderDetails.length,
+              itemBuilder: (context, index) {
+                final item = orderDetails[index];
+                final book = item['book'];
 
-              return Card(
-                margin:
-                    const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-                child: ListTile(
-                  leading: Image.network(
-                    book['image'] ?? 'https://via.placeholder.com/150',
-                    width: 50,
-                    height: 50,
-                    fit: BoxFit.cover,
+                return Card(
+                  elevation: 4,
+                  margin: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: ListTile(
+                    leading: Image.network(
+                      book['image'] ?? '',
+                      width: 50,
+                      height: 50,
+                      fit: BoxFit.cover,
+                    ),
+                    title: Text(book['nameBook']),
+                    subtitle: Text('Quantity: ${item['quantity']}'),
+                    trailing: Text('${item['price']} \$'),
                   ),
-                  title: Text(
-                    book['nameBook'],
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  subtitle: Text(
-                    'Author: ${book['author']}\n'
-                    'Publisher: ${book['publisher']}\n'
-                    'Price: ${book['price']} VND',
-                  ),
-                  trailing: Text('Quantity: ${item['quantity']}'),
-                ),
-              );
-            },
-          );
-        },
-      ),
-    );
+                );
+              },
+            );
+          },
+        ));
   }
 }
