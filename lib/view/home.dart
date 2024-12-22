@@ -1,44 +1,23 @@
-import 'package:book_store/chitietsanpham/chitietsanpham.dart';
-import 'package:book_store/view/userInfo.dart';
+import 'package:book_store/view/profile.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get_state_manager/src/simple/get_state.dart';
+
 import '../controller/book_controller.dart';
 import '../model/book.dart';
-import 'details.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  final BookController _controller = BookController();
-  late Future<List<Book>> _bookFuture;
-  String _searchQuery = '';
-
-  @override
-  void initState() {
-    super.initState();
-    _fetchBooks();
-  }
-
-  void _fetchBooks() {
-    setState(() {
-      if (_searchQuery.isEmpty) {
-        _bookFuture = _controller.Book_Snapshot(); // Lấy tất cả sách
-      } else {
-        _bookFuture = _controller.searchBooks(_searchQuery); // Tìm kiếm sách
-      }
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final BookController controller = BookController.controller;
+    final TextEditingController searchController = TextEditingController();
+
+    controller.updateSearch('');
+
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue,
         title: Row(
           children: [
             const Icon(Icons.menu),
@@ -46,10 +25,7 @@ class _HomePageState extends State<HomePage> {
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10.0),
                 child: TextField(
-                  onChanged: (value) {
-                    _searchQuery = value.trim();
-                    _fetchBooks(); // Gọi hàm tìm kiếm
-                  },
+                  controller: searchController,
                   decoration: InputDecoration(
                     hintText: 'Search books...',
                     filled: true,
@@ -59,6 +35,9 @@ class _HomePageState extends State<HomePage> {
                       borderSide: BorderSide.none,
                     ),
                   ),
+                  onChanged: (query) {
+                    controller.updateSearch(query);
+                  },
                 ),
               ),
             ),
@@ -69,96 +48,100 @@ class _HomePageState extends State<HomePage> {
                   MaterialPageRoute(builder: (context) => const UserPage()),
                 );
               },
+              child: const Icon(Icons.shopping_cart),
+            ),
+            SizedBox(
+              width: 10,
+            ),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const UserPage()),
+                );
+              },
               child: const Icon(Icons.person),
             ),
-
           ],
         ),
       ),
-      body: FutureBuilder<List<Book>>(
-        future: _bookFuture,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return Center(child: Text("Error: ${snapshot.error}"));
-          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return const Center(child: Text("No books found."));
-          }
-          final books = snapshot.data!;
-          return Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: GridView.builder(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: 10.0,
-                mainAxisSpacing: 10.0,
-                childAspectRatio: 0.6,
-              ),
-              itemCount: books.length,
-              itemBuilder: (context, index) {
-                final book = books[index];
-                return GestureDetector(
+      body: GetBuilder<BookController>(
+        id: "listBook",
+        builder: (controller) {
+          return FutureBuilder<List<Book>>(
+            future: controller.futureBooks,
+            builder: (context, snapshot) {
+              if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                return const Center(child: Text('No books found.'));
+              }
+
+              final books = snapshot.data!;
+
+              return GridView.builder(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 10.0,
+                  mainAxisSpacing: 10.0,
+                  childAspectRatio: 0.6,
+                ),
+                itemCount: books.length,
+                itemBuilder: (context, index) {
+                  final book = books[index];
+
+                  return GestureDetector(
                     onTap: () {
-                      Navigator.pushNamed(
-                        context,
-                        'chitiet',
-                        arguments: book
-                      );
+                      Navigator.pushNamed(context, 'chitiet', arguments: book);
                     },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey.shade300),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Expanded(
-                          flex: 7,
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
+                    child: Card(
+                      elevation: 4,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Expanded(
                             child: Image.network(
                               book.image,
-                              fit: BoxFit.contain,
+                              fit: BoxFit.cover,
                             ),
                           ),
-                        ),
-                        Expanded(
-                          flex: 3,
-                          child: Padding(
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              book.nameBook,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          Padding(
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 8.0),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  book.nameBook,
-                                  textAlign: TextAlign.center,
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16,
-                                  ),
-                                ),
-                                const SizedBox(height: 5),
-                                Text(
-                                  '${book.price} VND',
-                                  textAlign: TextAlign.center,
-                                  style: const TextStyle(
-                                    fontSize: 14,
-                                    color: Colors.grey,
-                                  ),
-                                ),
-                              ],
+                            child: Text(
+                              book.author,
+                              style: const TextStyle(fontSize: 14),
+                              overflow: TextOverflow.ellipsis,
                             ),
                           ),
-                        ),
-                      ],
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 8.0),
+                            child: Text(
+                              "${book.price}",
+                              style: const TextStyle(fontSize: 14),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                );
-              },
-            ),
+                  );
+                },
+              );
+            },
           );
         },
       ),

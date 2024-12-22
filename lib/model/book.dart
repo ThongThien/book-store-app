@@ -26,7 +26,6 @@ class Book {
     required this.language,
   });
 
-  // Chuyển đối tượng Book thành Map (dùng cho lưu vào cơ sở dữ liệu)
   Map<String, dynamic> toMap() {
     return {
       'id': id,
@@ -43,7 +42,6 @@ class Book {
     };
   }
 
-  // Tạo đối tượng Book từ Map (dùng cho truy vấn cơ sở dữ liệu)
   factory Book.fromMap(Map<String, dynamic> map) {
     return Book(
       id: map['id'] != null ? map['id'] as int : 0,

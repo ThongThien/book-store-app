@@ -1,7 +1,8 @@
+import 'package:book_store/view/home.dart';
 import 'package:flutter/material.dart';
 
-class Thongbaothanhtoanthanhcong extends StatelessWidget {
-  const Thongbaothanhtoanthanhcong({super.key});
+class SuccessNotification extends StatelessWidget {
+  const SuccessNotification({super.key});
   @override
   Widget build(BuildContext context) {
 
@@ -9,6 +10,22 @@ class Thongbaothanhtoanthanhcong extends StatelessWidget {
       appBar: AppBar(
         title: Text("Thanh Toán",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 30),),
         backgroundColor: Colors.orange,
+        leading: IconTheme(
+          data: IconThemeData(
+            color: Colors.white,
+            size: 40.0,
+          ),
+          child: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => HomePage()),
+                    (Route<dynamic> route) => false,
+              );
+            },
+          ),
+        ),
       ),
       body: Container(
         color: Colors.white,
@@ -22,13 +39,13 @@ class Thongbaothanhtoanthanhcong extends StatelessWidget {
             Text("CẢM ƠN BẠN ĐÃ MUA HÀNG",style: TextStyle(fontSize: 25,color: Colors.orange),),
             SizedBox(height: 30,),
             Text("Bạn đã đặt hàng thành công",style: TextStyle(fontSize: 20)),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text("Số đơn hàng: ",style: TextStyle(fontSize: 20)),
-                Text("#402316442",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold)),
-              ],
-            ),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.center,
+            //   children: [
+            //     Text("Số đơn hàng: ",style: TextStyle(fontSize: 20)),
+            //     Text("#402316442",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold)),
+            //   ],
+            // ),
             SizedBox(height: 20,),
             Text("Bạn sẽ sớm nhận được email xác nhận đơn hàng từ chúng tôi",style: TextStyle(fontSize: 20),textAlign: TextAlign.center,),
             SizedBox(height: 20,),
@@ -40,10 +57,10 @@ class Thongbaothanhtoanthanhcong extends StatelessWidget {
                         backgroundColor: WidgetStatePropertyAll(Colors.orange),
                         padding: WidgetStatePropertyAll(EdgeInsets.all(15))
                     ),
-                      onPressed: () {
+                    onPressed: () {
 
-                      },
-                      child: Text("Tiếp tục mua hàng",style: TextStyle(fontSize: 20,color: Colors.white),),
+                    },
+                    child: Text("Tiếp tục mua hàng",style: TextStyle(fontSize: 20,color: Colors.white),),
                   ),
                 ),
               ],
@@ -55,11 +72,11 @@ class Thongbaothanhtoanthanhcong extends StatelessWidget {
               children: [
                 Expanded(
                   child: ElevatedButton(
-                    style: ButtonStyle(
-                      backgroundColor: WidgetStatePropertyAll(Colors.white),
-                      side: WidgetStatePropertyAll(BorderSide(width: 3,color: Colors.orange)),
-                      padding: WidgetStatePropertyAll(EdgeInsets.all(15))
-                    ),
+                      style: ButtonStyle(
+                          backgroundColor: WidgetStatePropertyAll(Colors.white),
+                          side: WidgetStatePropertyAll(BorderSide(width: 3,color: Colors.orange)),
+                          padding: WidgetStatePropertyAll(EdgeInsets.all(15))
+                      ),
                       onPressed: () {
 
                       },
@@ -74,10 +91,10 @@ class Thongbaothanhtoanthanhcong extends StatelessWidget {
                   backgroundColor: WidgetStatePropertyAll(Colors.transparent),
                   textStyle: WidgetStatePropertyAll(TextStyle(fontSize: 20))
               ),
-                onPressed: () {
+              onPressed: () {
 
-                },
-                icon: Text("Thay đổi phương thức thanh toán >",style: TextStyle(color: Colors.blue),),
+              },
+              icon: Text("Thay đổi phương thức thanh toán >",style: TextStyle(color: Colors.blue),),
             ),
 
             SizedBox(height: 30,),

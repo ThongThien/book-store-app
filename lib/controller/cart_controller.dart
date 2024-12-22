@@ -8,21 +8,29 @@ class CartController extends GetxController{
   final List<CartItem> cart=[];
   final List<String> address=[];
   static CartController get controller => Get.find<CartController>();
+  double totalPrice(){
+    double sum=0;
+    for(CartItem cartItem in cart){
+      if(cartItem.selected){
+        sum+=cartItem.sl*cartItem.book.price;
+      }
+    }
+    return sum;
+  }
   void increase(int index){
     cart[index].sl++;
     update(['count']);
+    update(['totalPrice']);
   }
   void addressHandle(List<TextEditingController> addressList){
     for(int i=0;i<addressList.length;i++){
       address.insert(i, addressList[i].text.toString());
     }
-    for(String i in address){
-      print("${i}");
-    }
   }
   void decrease(int index){
     cart[index].sl++;
     update(['count']);
+    update(['totalPrice']);
   }
   void addToCart(Book book,int sum){
     for(var item in cart){
@@ -36,23 +44,24 @@ class CartController extends GetxController{
   void selectedHandle(int index){
     cart[index].selected=!cart[index].selected;
     update(['selected$index']);
-  }
-}
-class CartBindings extends Bindings{
-  @override
-  void dependencies() {
-    Get.put(CartController());
+    update(['totalPrice']);
   }
 }
 
+
 class GetXControllerIDCart extends GetxController{
-  int count=0;
+  int count=1;
   void increase(){
     count++;
     update(['count']);
   }
   void decrease(){
-    if(count!=0) count--;
+    if(count>1) count--;
+    update(['count']);
+  }
+  void setStart(){
+    count=1;
     update(['count']);
   }
 }
+
