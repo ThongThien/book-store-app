@@ -2,21 +2,6 @@ import 'package:book_store/chitietsanpham/kiemtraxacnhan.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class Xacnhan extends StatelessWidget {
-  const Xacnhan({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return GetMaterialApp(
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueAccent),
-        useMaterial3: true,
-      ),
-      debugShowCheckedModeBanner: false,
-      home: Pagexacnhan(),
-    );
-  }
-}
 class Pagexacnhan extends StatelessWidget {
   const Pagexacnhan({super.key});
 
@@ -32,7 +17,7 @@ class Pagexacnhan extends StatelessWidget {
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
-            Get.back(); // Quay lại màn hình trước đó
+            Navigator.of(context).pop();
           },
         ),
       ),
@@ -44,7 +29,11 @@ class Pagexacnhan extends StatelessWidget {
                 padding: WidgetStatePropertyAll(EdgeInsets.all(10))
             ),
             onPressed: () {
-              Get.to(KiemTraXacNhan(),arguments: [1,2,3,4]);
+              Navigator.pushNamed(
+                  context,
+                  'kiemtraxacnhan',
+                  arguments: [1,2,3,4]
+              );
             },
             child: Text("Thanh toán",style: TextStyle(color: Colors.white,fontSize: 25),)
         ),

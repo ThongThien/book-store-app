@@ -7,7 +7,6 @@ class Thongbaothanhtoanthanhcong extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false,
         title: Text("Thanh Toán",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 30),),
         backgroundColor: Colors.orange,
       ),

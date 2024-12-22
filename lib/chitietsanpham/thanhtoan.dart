@@ -1,25 +1,13 @@
 import 'package:book_store/chitietsanpham/xacnhan.dart';
+import 'package:book_store/controller/cart_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-class ThanhToan extends StatelessWidget {
-  const ThanhToan({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return GetMaterialApp(
-      home: PageThanhtoan(),
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueAccent),
-        useMaterial3: true,
-      ),
-      debugShowCheckedModeBanner: false,
-    );
-  }
-}
+List<TextEditingController> addressList=[];
 
 class PageThanhtoan extends StatelessWidget {
-  const PageThanhtoan({super.key});
-
+  PageThanhtoan({super.key});
+  final controller = Get.put(CartController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,7 +20,8 @@ class PageThanhtoan extends StatelessWidget {
             ),
 
             onPressed: () {
-              Get.to(Pagexacnhan());
+              controller.addressHandle(addressList);
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) => Pagexacnhan(),));
             },
             child: Text("Xác nhận địa chỉ",style: TextStyle(fontSize: 23,fontWeight: FontWeight.bold,color: Colors.white),)),
       ),
@@ -44,7 +33,7 @@ class PageThanhtoan extends StatelessWidget {
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
-
+            Navigator.of(context).pop();
           },
         ),
         backgroundColor: Colors.orange,
@@ -139,55 +128,57 @@ class PageThanhtoan extends StatelessWidget {
                   ],
                 ),
               ),
-              textfield("Họ và tên người nhận","textfield"),
-              textfield("SDT", "textfield"),
-              dropdown("Quốc gia",),
-              dropdown("Tỉnh / Thành phố"),
-              dropdown("Quận / Huyện", ),
-              dropdown("Phường / Xã",),
-              textfield("Địa chỉ ", "textfield"),
+              textfield("Họ và tên người nhận",0),
+              textfield("SDT",1),
+              textfield("Quốc gia",2),
+              textfield("Tỉnh / Thành phố",3),
+              textfield("Quận / Huyện",4 ),
+              textfield("Phường / Xã",5),
+              textfield("Địa chỉ ",6),
             ],
           ),
       ),
     );
   }
-  Widget dropdown(String title){
+  // Widget dropdown(String title){
+  //   var result;
+  //   result=DropdownButtonFormField<String>(
+  //     decoration: InputDecoration(
+  //         focusedBorder: OutlineInputBorder(
+  //             borderRadius: BorderRadius.circular(5),
+  //             borderSide: BorderSide(
+  //               width: 3,
+  //               color: Colors.grey,
+  //             )
+  //         ),
+  //         enabledBorder: OutlineInputBorder(
+  //             borderRadius: BorderRadius.circular(5),
+  //             borderSide: BorderSide(
+  //               width: 1,
+  //               color: Colors.grey,
+  //             )
+  //         )
+  //     ),
+  //     items: <String>['A', 'B', 'C', 'D'].map((String value) {
+  //       return DropdownMenuItem<String>(
+  //         value: value,
+  //         child: Text(value),
+  //       );
+  //     }).toList(),
+  //     onChanged: (_) {},
+  //   );
+  //   return Container(
+  //     child: ListTile(
+  //         title: Text(title,style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500),),
+  //         subtitle: result
+  //     ),
+  //   );
+  // }
+  Widget textfield(String title,int index){
     var result;
-    result=DropdownButtonFormField<String>(
-      decoration: InputDecoration(
-          focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(5),
-              borderSide: BorderSide(
-                width: 3,
-                color: Colors.grey,
-              )
-          ),
-          enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(5),
-              borderSide: BorderSide(
-                width: 1,
-                color: Colors.grey,
-              )
-          )
-      ),
-      items: <String>['A', 'B', 'C', 'D'].map((String value) {
-        return DropdownMenuItem<String>(
-          value: value,
-          child: Text(value),
-        );
-      }).toList(),
-      onChanged: (_) {},
-    );
-    return Container(
-      child: ListTile(
-          title: Text(title,style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500),),
-          subtitle: result
-      ),
-    );
-  }
-  Widget textfield(String title,String content){
-    var result;
+    addressList.insert(index,TextEditingController());
       result= TextField(
+        controller: addressList[index],
         decoration: InputDecoration(
             focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(5),

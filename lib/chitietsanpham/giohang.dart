@@ -1,3 +1,4 @@
+import 'package:book_store/chitietsanpham/thanhtoan.dart';
 import 'package:book_store/controller/cart_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -7,7 +8,6 @@ class CartApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      initialBinding: CartBindings() ,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueAccent),
         useMaterial3: true,
@@ -52,7 +52,7 @@ class GioHang extends StatelessWidget {
                   ),
                 Expanded(
                   child: ElevatedButton(onPressed:() {
-
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => PageThanhtoan(),));
                   },
                   child: Text("Thanh toán")
                   )
@@ -83,12 +83,20 @@ class GioHang extends StatelessWidget {
                           child: Row(
                             children: [
                               Expanded(
-                                  child: CheckboxListTile(
-                                    controlAffinity: ListTileControlAffinity.leading,
-                                    title: Image.network("${controller.cart[index].book.image}",height: 200,),
-                                    value: true, onChanged: (value) {
-
-                                  },)
+                                  child: GetBuilder(
+                                    builder: (controller) {
+                                      return CheckboxListTile(
+                                        controlAffinity: ListTileControlAffinity.leading,
+                                        title: Image.network("${controller.cart[index].book.image}",height: 200,),
+                                        value: controller.cart[index].selected,
+                                        onChanged: (value) {
+                                          controller.selectedHandle(index);
+                                        },
+                                      );
+                                    },
+                                  id: 'selected$index',
+                                  init: controller,
+                                  )
                               ),
                               SizedBox(width: 10,),
                               Expanded(child: Column(
@@ -118,9 +126,8 @@ class GioHang extends StatelessWidget {
                                                 color: Colors.black38
                                             ),
                                             child: IconButton(
-
                                               onPressed: () {
-
+                                                controller.increase(index);
                                               },
                                               icon: Text("+",style: TextStyle(
                                                   fontSize: 20
@@ -134,7 +141,13 @@ class GioHang extends StatelessWidget {
                                           child: Container(
                                             padding: EdgeInsets.only(left: 10,right: 10,bottom: 6,top: 6),
                                             color: Colors.white,
-                                            child: Text("100"),
+                                            child: GetBuilder(
+                                              id: 'count',
+                                              init:controller,
+                                                builder:(controller) {
+                                                  return Text("${controller.cart[index].sl}");
+                                                },
+                                            ),
                                           ),
                                         ),
                                         Expanded(
@@ -145,9 +158,8 @@ class GioHang extends StatelessWidget {
                                                 color: Colors.black38
                                             ),
                                             child: IconButton(
-
                                                 onPressed: () {
-
+                                                  controller.decrease(index);
                                                 },
                                                 icon: Text("-",style: TextStyle(
                                                     fontSize: 20
@@ -159,7 +171,6 @@ class GioHang extends StatelessWidget {
                                         Expanded(
                                           child: IconButton(
                                               onPressed: () {
-
                                               },
                                               icon: Icon(Icons.delete,size: 40,)),
                                         )

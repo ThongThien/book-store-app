@@ -57,7 +57,7 @@ class _LoginPageState extends State<LoginPage> {
           children:[
           buildNavigateButton(context,title: "Chi tiết sản phẩm",destination:Chitietsanpham()),
           buildNavigateButton(context,title: "Giỏ hàng",destination:GioHang()),
-          buildNavigateButton(context,title: "Thanh toán",destination:ThanhToan()),
+          buildNavigateButton(context,title: "Thanh toán",destination:PageThanhtoan()),
           buildNavigateButton(context,title: "Xác nhận Thanh toán",destination:PageXacNhanThanhToan()),
           buildNavigateButton(context,title: "Kiểm tra xác nhận Thanh toán",destination:KiemTraXacNhan()),
           buildNavigateButton(context,title: "Thông báo đặt hàng thành công",destination:Thongbaothanhtoanthanhcong()),

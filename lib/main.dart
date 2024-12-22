@@ -1,4 +1,5 @@
 import 'package:book_store/chitietsanpham/chitietsanpham.dart';
+import 'package:book_store/chitietsanpham/kiemtraxacnhan.dart';
 import 'package:book_store/view/home.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -31,7 +32,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(primarySwatch: Colors.blue),
       home: LoginPage(),
       routes: {
-        'chitiet':(context)=>Chitietsanpham()
+        'chitiet':(context)=>Chitietsanpham(),
+        'kiemtraxacnhan':(context)=>KiemTraXacNhan()
       },
     );
   }

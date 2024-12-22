@@ -1,21 +1,22 @@
+import 'package:book_store/chitietsanpham/thongbaothanhtoanthanhcong.dart';
 import 'package:book_store/controller/book_controller.dart';
+import 'package:book_store/controller/cart_controller.dart';
 import 'package:book_store/model/book.dart';
+import 'package:book_store/model/cart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 List<dynamic> listBook=[];
 class KiemTraXacNhan extends StatefulWidget {
   KiemTraXacNhan({super.key});
-
   @override
   State<KiemTraXacNhan> createState() => _KiemTraXacNhanState();
 }
 
 class _KiemTraXacNhanState extends State<KiemTraXacNhan> {
+  final controller = Get.put(CartController());
   final BookController _controller = BookController();
-
   late Future<List<Book>> _bookFuture;
-
   String _searchQuery = '';
 
   @override
@@ -36,7 +37,8 @@ class _KiemTraXacNhanState extends State<KiemTraXacNhan> {
 
   @override
   Widget build(BuildContext context) {
-    List<int> data=Get.arguments;
+    List<int> data=(ModalRoute.of(context)!.settings.arguments) as List<int> ;
+
     final mediaQuery = MediaQuery.of(context);
     return Scaffold(
       appBar: AppBar(
@@ -65,14 +67,20 @@ class _KiemTraXacNhanState extends State<KiemTraXacNhan> {
             Row(
               children: [
                 Expanded(
-                  child: ElevatedButton(
-                      style: ButtonStyle(
-                          backgroundColor: WidgetStatePropertyAll(Colors.orange)
-                      ),
-                      onPressed: () {
+                  child: FutureBuilder<void>(
+                    future: Cart_SnapShot.insert(controller.cart),
+                    builder: (context, snapshot) {
+                      return  ElevatedButton(
+                          style: ButtonStyle(
+                              backgroundColor: WidgetStatePropertyAll(Colors.orange)
+                          ),
+                          onPressed: () {
 
-                      },
-                      child: Text("Xác nhận đơn hàng",style: TextStyle(color: Colors.white,fontSize: 20),)
+                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => Thongbaothanhtoanthanhcong(),));
+                          },
+                          child: Text("Xác nhận đơn hàng",style: TextStyle(color: Colors.white,fontSize: 20),)
+                      );
+                    },
                   ),
                 ),
               ],
