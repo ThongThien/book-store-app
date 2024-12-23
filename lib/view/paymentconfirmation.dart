@@ -1,25 +1,11 @@
-import 'package:book_store/chitietsanpham/kiemtraxacnhan.dart';
+import 'package:book_store/controller/cart_controller.dart';
+import 'package:book_store/view/confirmationchecking.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class Xacnhan extends StatelessWidget {
-  const Xacnhan({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return GetMaterialApp(
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueAccent),
-        useMaterial3: true,
-      ),
-      debugShowCheckedModeBanner: false,
-      home: Pagexacnhan(),
-    );
-  }
-}
-class Pagexacnhan extends StatelessWidget {
-  const Pagexacnhan({super.key});
-
+class PaymentConfirmation extends StatelessWidget {
+  PaymentConfirmation({super.key});
+  final CartController controller = Get.put(CartController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,7 +18,7 @@ class Pagexacnhan extends StatelessWidget {
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
-            Get.back(); // Quay lại màn hình trước đó
+            Navigator.of(context).pop();
           },
         ),
       ),
@@ -44,7 +30,7 @@ class Pagexacnhan extends StatelessWidget {
                 padding: WidgetStatePropertyAll(EdgeInsets.all(10))
             ),
             onPressed: () {
-              Get.to(KiemTraXacNhan(),arguments: [1,2,3,4]);
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) => ConfirmationCheck(),));
             },
             child: Text("Thanh toán",style: TextStyle(color: Colors.white,fontSize: 25),)
         ),
@@ -141,8 +127,8 @@ class Pagexacnhan extends StatelessWidget {
               RadioListTile(
 
                 fillColor: WidgetStatePropertyAll(Colors.orange),
-                title: Text("Giao hàng tiêu chuẩn: 32.000đ",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
-                subtitle: Text("Dự kiến giao: Thứ năm-19/12",style: TextStyle(fontSize: 17),),
+                title: Text("Giao hàng tiêu chuẩn: 12",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+                subtitle: Text("Dự kiến giao: Sau 5 ngày từ lúc xuất hàng",style: TextStyle(fontSize: 17),),
                 value: true,
                 groupValue: true,
                 onChanged: (value) {
@@ -184,21 +170,21 @@ class Pagexacnhan extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text("Thành tiền",style: TextStyle(fontSize: 20)),
-                  Text("138.600 đ",style: TextStyle(fontSize: 20))
+                  Text("${controller.totalPrice()}",style: TextStyle(fontSize: 20))
                 ],
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text("Phí vận chuyển",style: TextStyle(fontSize: 20)),
-                  Text("32.000 đ",style: TextStyle(fontSize: 20))
+                  Text("12",style: TextStyle(fontSize: 20))
                 ],
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text("Tổng số tiền",style: TextStyle(fontSize: 20),),
-                  Text("170.600 đ",style: TextStyle(color: Colors.orange,fontSize: 20),)
+                  Text("${controller.totalPrice()+(12.00)}",style: TextStyle(color: Colors.orange,fontSize: 20),)
                 ],
               )
             ],

@@ -21,7 +21,7 @@ class LoginPage extends StatelessWidget {
         padding: EdgeInsets.all(10.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
+          children:[
             TextField(
               controller: usernameController,
               decoration: InputDecoration(

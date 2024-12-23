@@ -2,15 +2,13 @@ import 'package:get/get.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../model/user.dart';
 
+
 class UserController extends GetxController {
   var userId = 0.obs; // RxInt với giá trị mặc định là 0
-
   void setUser(int id) {
     userId.value = id; // Gán giá trị mới
     print("User ID đã được thiết lập: $id");
   }
-
-
   void clearUser() {
     userId.value = 0; // Reset về giá trị mặc định
     print("User ID đã được xóa: 0");

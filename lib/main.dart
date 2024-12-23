@@ -1,7 +1,9 @@
+import 'package:book_store/view/confirmationchecking.dart';
+import 'package:book_store/view/details.dart';
+import 'package:book_store/view/home.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'chitietsanpham/chitietsanpham.dart';
 import 'controller/user_controller.dart';
 import 'view/login.dart';
 
@@ -31,7 +33,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(primarySwatch: Colors.blue),
       home: LoginPage(),
       routes: {
-        'chitiet':(context)=>Chitietsanpham()
+        'chitiet':(context)=>Detail(),
+        'kiemtraxacnhan':(context)=>ConfirmationCheck(),
+        '/home':(context)=>HomePage()
       },
     );
   }
