@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'chitietsanpham/chitietsanpham.dart';
+import 'controller/user_controller.dart';
 import 'view/login.dart';
 
 void main() async {
@@ -22,6 +23,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      initialBinding: BindingsBuilder(() {
+        Get.put(UserController()); // Đảm bảo UserController được khởi tạo
+      }),
       debugShowCheckedModeBanner: false,
       title: 'Book Store',
       theme: ThemeData(primarySwatch: Colors.blue),

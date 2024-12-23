@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import '../controller/user_controller.dart';
 import 'login.dart';
 import 'orderDetails.dart';
@@ -23,17 +22,30 @@ class _UserPageState extends State<UserPage> {
   }
 
   void _userDataSnapshot() async {
-    final data = await userController
-        .getUserWithOrders(int.parse(userController.userId.value));
+    print("Đang lấy dữ liệu cho User ID: ${userController.userId.value}");
+    final data = await userController.getUserWithOrders(userController.userId.value);
     setState(() {
       _userData = data;
     });
+    print("Dữ liệu người dùng đã được tải thành công cho User ID: ${userController.userId.value}");
   }
+
 
   @override
   Widget build(BuildContext context) {
     final UserController userController = Get.find<UserController>();
+    print("Hiển thị giao diện với User ID: ${userController.userId.value}");
 
+    if (_userData == null) {
+      return Scaffold(
+        appBar: AppBar(
+          title: const Text('User Information'),
+        ),
+        body: const Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+    }
     return Scaffold(
       appBar: AppBar(
         title: const Text('User Information'),
