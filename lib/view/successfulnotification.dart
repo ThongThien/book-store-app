@@ -58,7 +58,11 @@ class SuccessNotification extends StatelessWidget {
                         padding: WidgetStatePropertyAll(EdgeInsets.all(15))
                     ),
                     onPressed: () {
-
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: (context) => HomePage()),
+                            (Route<dynamic> route) => false,
+                      );
                     },
                     child: Text("Tiếp tục mua hàng",style: TextStyle(fontSize: 20,color: Colors.white),),
                   ),
@@ -68,35 +72,7 @@ class SuccessNotification extends StatelessWidget {
             SizedBox(
               height: 20,
             ),
-            Row(
-              children: [
-                Expanded(
-                  child: ElevatedButton(
-                      style: ButtonStyle(
-                          backgroundColor: WidgetStatePropertyAll(Colors.white),
-                          side: WidgetStatePropertyAll(BorderSide(width: 3,color: Colors.orange)),
-                          padding: WidgetStatePropertyAll(EdgeInsets.all(15))
-                      ),
-                      onPressed: () {
-
-                      },
-                      child: Text("Xem chi tiết đơn hàng",style: TextStyle(fontSize: 20,color: Colors.orange),)
-                  ),
-                ),
-              ],
-            ),
             SizedBox(height: 10,),
-            IconButton(
-              style: ButtonStyle(
-                  backgroundColor: WidgetStatePropertyAll(Colors.transparent),
-                  textStyle: WidgetStatePropertyAll(TextStyle(fontSize: 20))
-              ),
-              onPressed: () {
-
-              },
-              icon: Text("Thay đổi phương thức thanh toán >",style: TextStyle(color: Colors.blue),),
-            ),
-
             SizedBox(height: 30,),
             Text("Bạn cần hỗ trợ, vui lòng liên hệ",style: TextStyle(fontSize: 18,color: Colors.grey),),
             Text("1900.63.64.67",style: TextStyle(fontSize: 18,color: Colors.orange,fontWeight: FontWeight.bold),)

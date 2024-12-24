@@ -15,7 +15,8 @@ class CartItem{
       'order_id': code,
       'book_id': book.id,
       'quantity': sl,
-      'price': book.price
+      'price': book.price,
+      'state':'đã đặt'
     };
   }
 

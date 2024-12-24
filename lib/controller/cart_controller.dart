@@ -34,11 +34,14 @@ class CartController extends GetxController{
   void addToCart(Book book,int sum){
     for(var item in cart){
       if(item.book.id==book.id){
-        item.sl++;
-        return ;
+        item.sl+=sum;
+        Get.snackbar("Đã thêm vào giỏ hàng", "");
+        return;
       }
     }
     cart.add(CartItem(book: book, sl: sum,selected: true));
+    Get.snackbar("Đã thêm vào giỏ hàng", "");
+
   }
   void selectedHandle(int index){
     cart[index].selected=!cart[index].selected;
