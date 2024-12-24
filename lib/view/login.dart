@@ -8,6 +8,9 @@ class LoginPage extends StatelessWidget {
   final LoginController loginController = Get.put(LoginController());
   final UserController userController = Get.put(UserController());
 
+  final TextEditingController usernameController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,27 +23,29 @@ class LoginPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children:[
             TextField(
-              onChanged: (value) => loginController.username.value = value,
+              controller: usernameController,
               decoration: InputDecoration(
                   labelText: "Username", border: OutlineInputBorder()),
             ),
-            SizedBox(height: 20,),
+            SizedBox(height: 20),
             TextField(
-              onChanged: (value) => loginController.password.value = value,
-              decoration: InputDecoration(labelText: "Password",border: OutlineInputBorder()),
+              controller: passwordController,
+              decoration: InputDecoration(
+                  labelText: "Password", border: OutlineInputBorder()),
+              obscureText: true,
             ),
-            SizedBox(
-              height: 20,
-            ),
+            SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () => loginController.login(),
+              onPressed: () => loginController.login(
+                  usernameController.text, passwordController.text),
               child: Text("Login"),
             ),
             TextButton(
-                onPressed: () {
-                  Get.to(() => SignUpPage());
-                },
-                child: Text("Sign Up"))
+              onPressed: () {
+                Get.to(() => SignUpPage());
+              },
+              child: Text("Sign Up"),
+            )
           ],
         ),
       ),
