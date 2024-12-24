@@ -2,22 +2,6 @@ import 'package:book_store/controller/cart_controller.dart';
 import 'package:book_store/view/address.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-class CartApp extends StatelessWidget {
-  const CartApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return GetMaterialApp(
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueAccent),
-        useMaterial3: true,
-      ),
-      debugShowCheckedModeBanner: false,
-      home: Cart(),
-    );
-  }
-}
-
 class Cart extends StatelessWidget {
   Cart({super.key});
   final controller = Get.put(CartController());

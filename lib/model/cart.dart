@@ -44,12 +44,14 @@ class Cart_SnapShot{
     double sum=0;
     for (CartItem i in list){
       sum+=i.book.price*i.sl;
-      await supabase.from("order_item").insert(i.toMap(code)).then((value) => print("đã thêm order_item"),).catchError((error) {
-        print("Lỗi: $error");
-      });
     }
     await supabase.from("order").insert(Cart_SnapShot.addOrder(sum, addr,code,userId)).then((value) => print("đã thêm order"),).catchError((error) {
       print("Lỗi: $error");
     });
+    for(CartItem i in list){
+      await supabase.from("order_item").insert(i.toMap(code)).then((value) => print("đã thêm order_item"),).catchError((error) {
+        print("Lỗi: $error");
+      });
+    }
   }
 }

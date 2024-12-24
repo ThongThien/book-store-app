@@ -2,7 +2,6 @@ import 'package:book_store/model/book.dart';
 import 'package:book_store/model/cart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 class CartController extends GetxController{
   final List<CartItem> cart=[];

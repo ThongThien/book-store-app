@@ -1,3 +1,5 @@
+import 'package:book_store/view/cart.dart';
+import 'package:book_store/view/categories.dart';
 import 'package:book_store/view/profile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +22,12 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         title: Row(
           children: [
-            const Icon(Icons.menu),
+            IconButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => Danhmuc(),));
+                },
+                icon: const Icon(Icons.menu)
+            ),
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -45,7 +52,7 @@ class HomePage extends StatelessWidget {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const UserPage()),
+                  MaterialPageRoute(builder: (context) => Cart()),
                 );
               },
               child: const Icon(Icons.shopping_cart),
