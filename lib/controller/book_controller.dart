@@ -23,7 +23,6 @@ class BookController extends GetxController {
   Future<List<Book>> searchBooks(String query) async {
     final result =
         await _client.from('book').select('*').ilike('nameBook', '%$query%');
-
     if (result == null || (result as List).isEmpty) {
       return [];
     }
