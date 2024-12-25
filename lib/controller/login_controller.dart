@@ -22,9 +22,9 @@ class LoginController extends GetxController {
 
       if (loginUser != null) {
         final id = loginUser['id'];
-        Get.find<UserController>().setUser(id); // Đặt userId
+        Get.find<UserController>().setUser(id);
         Get.snackbar('Thành công', 'Đăng nhập thành công');
-        Get.to(() => HomePage());
+        Get.to(() => const HomePage());
       } else {
         Get.snackbar('Lỗi', 'Tên đăng nhập hoặc mật khẩu không đúng');
       }

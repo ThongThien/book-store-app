@@ -1,6 +1,5 @@
 import 'package:book_store/controller/login_controller.dart';
 import 'package:book_store/controller/user_controller.dart';
-import 'package:book_store/view/signUp.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -40,12 +39,6 @@ class LoginPage extends StatelessWidget {
                   usernameController.text, passwordController.text),
               child: Text("Login"),
             ),
-            TextButton(
-              onPressed: () {
-                Get.to(() => SignUpPage());
-              },
-              child: Text("Sign Up"),
-            )
           ],
         ),
       ),
