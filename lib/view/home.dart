@@ -3,6 +3,8 @@ import 'package:book_store/view/categories.dart';
 import 'package:book_store/view/profile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 
 import '../controller/book_controller.dart';
@@ -13,10 +15,9 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final BookController controller = BookController.controller;
+    final BookController bookController = Get.put(BookController());
     final TextEditingController searchController = TextEditingController();
-
-    controller.updateSearch('');
+    bookController.updateSearch('');
 
     return Scaffold(
       appBar: AppBar(
@@ -43,7 +44,7 @@ class HomePage extends StatelessWidget {
                     ),
                   ),
                   onChanged: (query) {
-                    controller.updateSearch(query);
+                    bookController.updateSearch(query);
                   },
                 ),
               ),
@@ -73,7 +74,6 @@ class HomePage extends StatelessWidget {
         ),
       ),
       body: GetBuilder<BookController>(
-        id: "listBook",
         builder: (controller) {
           return FutureBuilder<List<Book>>(
             future: controller.futureBooks,

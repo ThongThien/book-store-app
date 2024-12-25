@@ -12,9 +12,13 @@ class UserPage extends StatefulWidget {
 }
 
 class _UserPageState extends State<UserPage> {
-  final UserController userController = Get.find<UserController>();
-  Map<String, dynamic>? _userData;
-
+  final UserController userController = Get.put(UserController());
+  Map<String, dynamic>?
+      _userData; // lưu trữ dữ liệu người dùng và danh sách đơn hàng
+//_userData = {
+//   'user': UserModel, // Thông tin người dùng
+//   'orders': List<Map<String, dynamic>> // Danh sách đơn hàng
+// };
   @override
   void initState() {
     super.initState();
@@ -22,20 +26,15 @@ class _UserPageState extends State<UserPage> {
   }
 
   void _userDataSnapshot() async {
-    print("Đang lấy dữ liệu cho User ID: ${userController.userId.value}");
-    final data = await userController.getUserWithOrders(userController.userId.value);
+    final data =
+        await userController.getUserWithOrders(userController.userId.value);
     setState(() {
       _userData = data;
     });
-    print("Dữ liệu người dùng đã được tải thành công cho User ID: ${userController.userId.value}");
   }
-
 
   @override
   Widget build(BuildContext context) {
-    final UserController userController = Get.find<UserController>();
-    print("Hiển thị giao diện với User ID: ${userController.userId.value}");
-
     if (_userData == null) {
       return Scaffold(
         appBar: AppBar(
@@ -48,7 +47,7 @@ class _UserPageState extends State<UserPage> {
     }
     return Scaffold(
       appBar: AppBar(
-        title: const Text('User Information'),
+        title: const Text('Profile'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -59,46 +58,61 @@ class _UserPageState extends State<UserPage> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Center(
-                  child: CircleAvatar(
-                    radius: 50,
-                    backgroundImage: const NetworkImage(
-                      'https://static.vecteezy.com/system/resources/previews/019/896/008/original/male-user-avatar-icon-in-flat-design-style-person-signs-illustration-png.png',
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Center(
+                      child: CircleAvatar(
+                        radius: 50,
+                        backgroundImage: const NetworkImage(
+                          'https://static.vecteezy.com/system/resources/previews/019/896/008/original/male-user-avatar-icon-in-flat-design-style-person-signs-illustration-png.png',
+                        ),
+                        backgroundColor: Colors.grey[200],
+                      ),
                     ),
-                    backgroundColor: Colors.grey[200],
-                  ),
-                ),
-                const SizedBox(height: 20),
-                Text(
-                  'User ID: ${userController.userId.value}',
-                  style: const TextStyle(fontSize: 18),
-                ),
-                const SizedBox(height: 5),
-                Text(
-                  'Name: ${_userData!['user'].name}',
-                  style: const TextStyle(fontSize: 18),
-                ),
-                const SizedBox(height: 5),
-                Text(
-                  'Email: ${_userData!['user'].email}',
-                  style: const TextStyle(fontSize: 18),
-                ),
-                const SizedBox(height: 5),
-                Text(
-                  'Address: ${_userData!['user'].address}',
-                  style: const TextStyle(fontSize: 18),
-                ),
-                const SizedBox(height: 5),
-                Text(
-                  'Phone Number: ${_userData!['user'].phoneNumber}',
-                  style: const TextStyle(fontSize: 18),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'User ID: ${userController.userId.value}',
+                          style: const TextStyle(fontSize: 18),
+                        ),
+                        Text(
+                          'Name: ${_userData!['user'].name}',
+                          style: const TextStyle(fontSize: 18),
+                        ),
+                        Text(
+                          'Email: ${_userData!['user'].email}',
+                          style: const TextStyle(fontSize: 18),
+                        ),
+                        Text(
+                          'Address: ${_userData!['user'].address}',
+                          style: const TextStyle(fontSize: 18),
+                        ),
+                        Text(
+                          'Phone Number: ${_userData!['user'].phoneNumber}',
+                          style: const TextStyle(fontSize: 18),
+                        ),
+                      ],
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        userController.clearUser();
+                        Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(builder: (context) => LoginPage()),
+                          (Route<dynamic> route) => false,
+                        );
+                      },
+                      child: const Text("Logout"),
+                    ),
+                  ],
                 ),
               ],
             ),
 
             const Divider(),
             const SizedBox(height: 10),
-
             const Text(
               'Orders:',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
@@ -130,18 +144,6 @@ class _UserPageState extends State<UserPage> {
                   );
                 },
               ),
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                userController.clearUser();
-                Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(builder: (context) => LoginPage()),
-                  (Route<dynamic> route) => false,
-                );
-              },
-              child: const Text("Logout"),
             ),
           ],
         ),

@@ -8,10 +8,7 @@ import '../model/book.dart';
 class BookController extends GetxController {
   final SupabaseClient _client = Supabase.instance.client;
 
-  // Biến lưu trữ trạng thái Future
   Future<List<Book>>? futureBooks;
-
-  static BookController get controller => Get.put(BookController());
 
   Future<List<Book>> Book_Snapshot() async {
     final book_supabase = await _client.from('book').select("*");
@@ -19,6 +16,7 @@ class BookController extends GetxController {
       throw Exception('Không tìm thấy dữ liệu');
     }
     final data = book_supabase as List;
+    //Chuyển đổi dữ liệu từ JSON (book_supabase) thành danh sách các đối tượng Book bằng Book.fromMap.
     return data.map((e) => Book.fromMap(e)).toList();
   }
 
@@ -36,6 +34,6 @@ class BookController extends GetxController {
 
   void updateSearch(String query) {
     futureBooks = query.isEmpty ? Book_Snapshot() : searchBooks(query);
-    update(["listBook"]);
+    update();
   }
 }

@@ -30,7 +30,7 @@ class Book {
     return {
       'id': id,
       'nameBook': nameBook,
-      'publicationDate': publicationDate.toIso8601String(), // Chuyển DateTime sang String ISO8601
+      'publicationDate': publicationDate.toIso8601String(),
       'author': author,
       'publisher': publisher,
       'categoryID': categoryID,
@@ -59,7 +59,7 @@ class Book {
           : 0.0,
       description: map['description'] ?? 'No description',
       stock_quantity: map['stock_quantity'] != null ? map['stock_quantity'] as int : 0,
-      image: map['image'] ?? 'https://via.placeholder.com/150', // Ảnh mặc định nếu null
+      image: map['image'] ,
       language: map['language'] ?? 'Unknown',
     );
   }
