@@ -1,3 +1,4 @@
+import 'package:book_store/view/categoryselection.dart';
 import 'package:book_store/view/confirmationchecking.dart';
 import 'package:book_store/view/details.dart';
 import 'package:book_store/view/home.dart';
@@ -35,7 +36,8 @@ class MyApp extends StatelessWidget {
       routes: {
         'chitiet':(context)=>Detail(),
         'kiemtraxacnhan':(context)=>ConfirmationCheck(),
-        '/home':(context)=>HomePage()
+        '/home':(context)=>HomePage(),
+        'categoryselection':(context)=>CategorySelection(),
       },
     );
   }

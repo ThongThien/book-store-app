@@ -37,7 +37,7 @@ class _ConfirmationCheckState extends State<ConfirmationCheck> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text("Tổng số tiền",style: TextStyle(fontSize: 20),),
-                  Text("${controller.totalPrice()}",style: TextStyle(fontSize: 20,color: Colors.orange))
+                  Text("${controller.totalPrice()+12.00}",style: TextStyle(fontSize: 20,color: Colors.orange))
                 ],
               ),
             ),
