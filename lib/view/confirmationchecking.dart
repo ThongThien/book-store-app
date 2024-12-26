@@ -239,16 +239,9 @@ class _ConfirmationCheckState extends State<ConfirmationCheck> {
                                     const SizedBox(
                                       width: 10,
                                     ),
-                                    const Text(
-                                      "99.000 đ",
-                                      style: TextStyle(
-                                        decoration: TextDecoration.lineThrough,
-                                        fontSize: 17,
-                                      ),
-                                    ),
                                   ],
                                 ),
-                                Text("${controller.cart[index].sl}",
+                                Text("Số lượng: ${controller.cart[index].sl}",
                                     style: const TextStyle(fontSize: 20)),
                               ],
                             ),

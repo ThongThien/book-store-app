@@ -54,6 +54,16 @@ class CartController extends GetxController {
     update(['selected$index']);
     update(['totalPrice']);
   }
+
+  void removeItem(Book item){
+    for(var i in cart){
+      if(i.book.id==item.id){
+        cart.remove(i);
+      }
+    }
+    update(['cart']);
+    update(['totalPrice']);
+  }
 }
 
 class GetXControllerIDCart extends GetxController {

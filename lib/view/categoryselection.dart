@@ -18,7 +18,7 @@ class _CategorySelectionState extends State<CategorySelection> {
     final id = (ModalRoute.of(context)!.settings.arguments) as int;
     return Scaffold(
         appBar: AppBar(
-          title: const Text("Thể loại"),
+            title: const Text("Sách thuộc thể loại được chọn"),
         ),
         body: FutureBuilder<void>(
           future: controller.getCategory(id),
