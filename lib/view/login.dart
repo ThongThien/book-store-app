@@ -10,34 +10,36 @@ class LoginPage extends StatelessWidget {
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
+  LoginPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("LOGIN"),
+        title: const Text("LOGIN"),
       ),
       body: Padding(
-        padding: EdgeInsets.all(10.0),
+        padding: const EdgeInsets.all(10.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children:[
+          children: [
             TextField(
               controller: usernameController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                   labelText: "Username", border: OutlineInputBorder()),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             TextField(
               controller: passwordController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                   labelText: "Password", border: OutlineInputBorder()),
               obscureText: true,
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () => loginController.login(
                   usernameController.text, passwordController.text),
-              child: Text("Login"),
+              child: const Text("Login"),
             ),
           ],
         ),

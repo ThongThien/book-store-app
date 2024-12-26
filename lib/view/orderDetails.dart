@@ -5,7 +5,8 @@ import 'package:get/get.dart';
 class OrderDetailPage extends StatefulWidget {
   final int orderID;
 
-  OrderDetailPage({
+  const OrderDetailPage({
+    super.key,
     required this.orderID,
   });
 
@@ -83,14 +84,14 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                   trailing: state == "Đã Hủy"
                       ? null
                       : ElevatedButton(
-                    onPressed: () async {
-                      await _updateStateAndRefresh(item['id'], "Đã Hủy");
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.red,
-                    ),
-                    child: const Text("Hủy"),
-                  ),
+                          onPressed: () async {
+                            await _updateStateAndRefresh(item['id'], "Đã Hủy");
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.red,
+                          ),
+                          child: const Text("Hủy"),
+                        ),
                 ),
               );
             },

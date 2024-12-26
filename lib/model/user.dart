@@ -1,7 +1,3 @@
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
-
 class UserModel {
   final int id;
   final String username;

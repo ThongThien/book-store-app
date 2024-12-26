@@ -3,18 +3,24 @@ import 'package:book_store/model/book.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class CategorySelection extends StatelessWidget {
-  CategorySelection({super.key});
-  CategoryController controller= Get.put(CategoryController());
+class CategorySelection extends StatefulWidget {
+  const CategorySelection({super.key});
+
+  @override
+  State<CategorySelection> createState() => _CategorySelectionState();
+}
+
+class _CategorySelectionState extends State<CategorySelection> {
+  CategoryController controller = Get.put(CategoryController());
 
   @override
   Widget build(BuildContext context) {
     final id = (ModalRoute.of(context)!.settings.arguments) as int;
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Thể loại"),
-      ),
-      body: FutureBuilder<void>(
+        appBar: AppBar(
+          title: const Text("Thể loại"),
+        ),
+        body: FutureBuilder<void>(
           future: controller.getCategory(id),
           builder: (context, snapshot) {
             return GridView.builder(
@@ -28,7 +34,27 @@ class CategorySelection extends StatelessWidget {
               itemBuilder: (context, index) {
                 return GestureDetector(
                   onTap: () {
-                    Navigator.pushNamed(context, 'chitiet', arguments: Book(id: controller.selectedCategory[index]['id'], nameBook: controller.selectedCategory[index]['nameBook'], publicationDate:DateTime.parse( controller.selectedCategory[index]['publicationDate']), author: controller.selectedCategory[index]['author'], publisher: controller.selectedCategory[index]['publisher'], categoryID: controller.selectedCategory[index]['categoryID'], price: controller.selectedCategory[index]['price'], description: controller.selectedCategory[index]['description'], stock_quantity: controller.selectedCategory[index]['stock_quantity'], image: controller.selectedCategory[index]['image'], language: controller.selectedCategory[index]['language']));
+                    Navigator.pushNamed(context, 'chitiet',
+                        arguments: Book(
+                            id: controller.selectedCategory[index]['id'],
+                            nameBook: controller.selectedCategory[index]
+                                ['nameBook'],
+                            publicationDate: DateTime.parse(controller
+                                .selectedCategory[index]['publicationDate']),
+                            author: controller.selectedCategory[index]
+                                ['author'],
+                            publisher: controller.selectedCategory[index]
+                                ['publisher'],
+                            categoryID: controller.selectedCategory[index]
+                                ['categoryID'],
+                            price: controller.selectedCategory[index]['price'],
+                            description: controller.selectedCategory[index]
+                                ['description'],
+                            stockQuantity: controller.selectedCategory[index]
+                                ['stock_quantity'],
+                            image: controller.selectedCategory[index]['image'],
+                            language: controller.selectedCategory[index]
+                                ['language']));
                   },
                   child: Card(
                     elevation: 4,
@@ -56,8 +82,7 @@ class CategorySelection extends StatelessWidget {
                           ),
                         ),
                         Padding(
-                          padding:
-                          const EdgeInsets.symmetric(horizontal: 8.0),
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
                           child: Text(
                             controller.selectedCategory[index]['author'],
                             style: const TextStyle(fontSize: 14),
@@ -65,8 +90,7 @@ class CategorySelection extends StatelessWidget {
                           ),
                         ),
                         Padding(
-                          padding:
-                          const EdgeInsets.symmetric(horizontal: 8.0),
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
                           child: Text(
                             "${controller.selectedCategory[index]['price']}",
                             style: const TextStyle(fontSize: 14),
@@ -80,7 +104,6 @@ class CategorySelection extends StatelessWidget {
               },
             );
           },
-      )
-    );
+        ));
   }
 }

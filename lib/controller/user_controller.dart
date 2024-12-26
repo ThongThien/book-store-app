@@ -34,7 +34,7 @@ class UserController extends GetxController {
 
       return {
         'user': UserModel.fromMap(userData),
-        'orders': ordersData ?? [],
+        'orders': ordersData,
       };
     } catch (e) {
       throw Exception('Không thể tải thông tin người dùng');
@@ -60,11 +60,9 @@ class UserController extends GetxController {
     try {
       await _client
           .from('order_item')
-          .update({'state': newState})
-          .eq('id', orderItemId);
+          .update({'state': newState}).eq('id', orderItemId);
     } catch (e) {
       throw Exception('Không thể cập nhật trạng thái: $e');
     }
   }
-
 }

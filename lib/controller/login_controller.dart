@@ -29,7 +29,6 @@ class LoginController extends GetxController {
         Get.snackbar('Lỗi', 'Tên đăng nhập hoặc mật khẩu không đúng');
       }
     } catch (error) {
-      print('Lỗi khi đăng nhập: $error');
       Get.snackbar('Lỗi', 'Có lỗi xảy ra: $error');
     }
   }

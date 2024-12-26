@@ -1,4 +1,3 @@
-
 class Book {
   final int id;
   final String nameBook;
@@ -8,7 +7,7 @@ class Book {
   final int categoryID;
   final double price;
   final String description;
-  final int stock_quantity;
+  final int stockQuantity;
   final String image;
   final String language;
 
@@ -21,7 +20,7 @@ class Book {
     required this.categoryID,
     required this.price,
     required this.description,
-    required this.stock_quantity,
+    required this.stockQuantity,
     required this.image,
     required this.language,
   });
@@ -36,7 +35,7 @@ class Book {
       'categoryID': categoryID,
       'price': price,
       'description': description,
-      'stock_quantity': stock_quantity,
+      'stock_quantity': stockQuantity,
       'image': image,
       'language': language,
     };
@@ -54,14 +53,14 @@ class Book {
       categoryID: map['categoryID'] != null ? map['categoryID'] as int : 0,
       price: map['price'] != null
           ? (map['price'] is int
-          ? (map['price'] as int).toDouble()
-          : map['price'] as double)
+              ? (map['price'] as int).toDouble()
+              : map['price'] as double)
           : 0.0,
       description: map['description'] ?? 'No description',
-      stock_quantity: map['stock_quantity'] != null ? map['stock_quantity'] as int : 0,
-      image: map['image'] ,
+      stockQuantity:
+          map['stock_quantity'] != null ? map['stock_quantity'] as int : 0,
+      image: map['image'],
       language: map['language'] ?? 'Unknown',
     );
   }
-
 }

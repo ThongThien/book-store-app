@@ -17,7 +17,7 @@ class Detail extends StatelessWidget {
   Widget build(BuildContext context) {
     final arg = (ModalRoute.of(context)!.settings.arguments) as Book;
     return Scaffold(
-      bottomNavigationBar: Container(
+      bottomNavigationBar: SizedBox(
         height: 70,
         child: Container(
           color: Colors.white,
@@ -25,109 +25,96 @@ class Detail extends StatelessWidget {
             children: [
               Expanded(
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 15, right: 15),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Expanded(
-                              child: Container(
-                                width: 20,
-                                height: 30,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5),
-                                    shape: BoxShape.rectangle,
-                                    color: Colors.black38),
-                                child: IconButton(
-                                    iconSize: 20,
-                                    onPressed: () {
-                                      controller.increase();
-                                    },
-                                    icon: Icon(Icons.add)),
-                              ),
-                            ),
-                            Expanded(
-                              flex: 3,
-                              child: Container(
-                                padding: EdgeInsets.only(
-                                    left: 10, right: 10, bottom: 6, top: 6),
-                                color: Colors.white,
-                                child: GetBuilder(
-                                  init: controller,
-                                  id: "count",
-                                  builder: (controller) {
-                                    return Text("${controller.count}");
-                                  },
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              child: Container(
-                                height: 30,
-                                width: 20,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5),
-                                  shape: BoxShape.rectangle,
-                                  color: Colors.black38,
-                                ),
-                                child: IconButton(
-                                    iconSize: 20,
-                                    onPressed: () {
-                                      controller.decrease();
-                                    },
-                                    icon: Icon(Icons.remove)),
-                              ),
-                            ),
-                          ],
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15, right: 15),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          child: Container(
+                            width: 20,
+                            height: 30,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                shape: BoxShape.rectangle,
+                                color: Colors.black38),
+                            child: IconButton(
+                                iconSize: 20,
+                                onPressed: () {
+                                  controller.increase();
+                                },
+                                icon: const Icon(Icons.add)),
+                          ),
                         ),
-                      ),
-                    ],
-                  )),
+                        Expanded(
+                          flex: 3,
+                          child: Container(
+                            padding: const EdgeInsets.only(
+                                left: 10, right: 10, bottom: 6, top: 6),
+                            color: Colors.white,
+                            child: GetBuilder(
+                              init: controller,
+                              id: "count",
+                              builder: (controller) {
+                                return Text("${controller.count}");
+                              },
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: Container(
+                            height: 30,
+                            width: 20,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              shape: BoxShape.rectangle,
+                              color: Colors.black38,
+                            ),
+                            child: IconButton(
+                                iconSize: 20,
+                                onPressed: () {
+                                  controller.decrease();
+                                },
+                                icon: const Icon(Icons.remove)),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              )),
               Expanded(
                   child: Container(
-                    alignment: Alignment.center,
-                    height: 70,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.rectangle,
-                      color: Colors.white,
-                    ),
-                    child: GestureDetector(
-                      onTap: () {
-                        cartController.addToCart(arg, controller.count);
-                      },
-                      child: Text("Thêm vào giỏ hàng",
-                          style: TextStyle(fontSize: 20, color: Colors.orange)),
-                    ),
-                  )),
-              Expanded(
-                  child: Container(
-                    alignment: Alignment.center,
-                    height: 70,
-                    decoration: BoxDecoration(
-                        shape: BoxShape.rectangle, color: Colors.orange),
-                    child: GestureDetector(
-                      child: Text(
-                        "Mua ngay",
-                        style: TextStyle(fontSize: 20, color: Colors.white),
-                      ),
-                    ),
-                  )),
+                alignment: Alignment.center,
+                height: 70,
+                decoration: const BoxDecoration(
+                  shape: BoxShape.rectangle,
+                  color: Colors.white,
+                ),
+                child: GestureDetector(
+                  onTap: () {
+                    cartController.addToCart(arg, controller.count);
+                  },
+                  child: const Text("Thêm vào giỏ hàng",
+                      style: TextStyle(fontSize: 20, color: Colors.orange)),
+                ),
+              )),
             ],
           ),
         ),
       ),
       appBar: AppBar(
         backgroundColor: Colors.orange,
-        actionsIconTheme: IconThemeData(),
+        actionsIconTheme: const IconThemeData(),
         leading: IconTheme(
-          data: IconThemeData(
+          data: const IconThemeData(
             color: Colors.white,
             size: 40.0,
           ),
           child: IconButton(
-            icon: Icon(Icons.arrow_back),
+            icon: const Icon(Icons.arrow_back),
             onPressed: () {
               controller.setStart();
               Navigator.of(context).pop();
@@ -135,19 +122,18 @@ class Detail extends StatelessWidget {
           ),
         ),
         actions: [
-          IconButton(onPressed: () {}, icon: Icon(Icons.search)),
-          IconButton(onPressed: () {}, icon: Icon(Icons.home_outlined)),
           IconButton(
               onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(builder: (context) => Cart(),));
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => Cart(),
+                ));
               },
-              icon: Icon(Icons.shopping_cart_checkout_outlined)),
-          IconButton(onPressed: () {}, icon: Icon(Icons.menu)),
+              icon: const Icon(Icons.shopping_cart_checkout_outlined)),
         ],
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.only(left: 5, right: 5, top: 0, bottom: 0),
+          padding: const EdgeInsets.only(left: 5, right: 5, top: 0, bottom: 0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -158,37 +144,37 @@ class Detail extends StatelessWidget {
                     builder: (BuildContext context) {
                       return Container(
                           width: MediaQuery.of(context).size.width,
-                          margin: EdgeInsets.symmetric(horizontal: 5.0),
-                          padding: EdgeInsets.all(10),
-                          decoration: BoxDecoration(color: Colors.white),
+                          margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                          padding: const EdgeInsets.all(10),
+                          decoration: const BoxDecoration(color: Colors.white),
                           child: FittedBox(
-                            child: Image.network("${arg.image}"),
+                            child: Image.network(arg.image),
                           ));
                     },
                   );
                 }).toList(),
               ),
               Padding(
-                padding: EdgeInsets.all(5),
+                padding: const EdgeInsets.all(5),
                 child: Wrap(
                   crossAxisAlignment: WrapCrossAlignment.center,
                   spacing: 10,
                   children: [
                     Text(
                       "${arg.price} \$ ",
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontSize: 30,
                           color: Colors.red,
                           fontWeight: FontWeight.w900),
                     ),
-                    Text(
+                    const Text(
                       "178.000",
                       style: TextStyle(
                           fontSize: 20,
                           color: CupertinoColors.systemGrey2,
                           decoration: TextDecoration.lineThrough),
                     ),
-                    Text(
+                    const Text(
                       "-27%",
                       style: TextStyle(color: Colors.red),
                     )
@@ -197,76 +183,48 @@ class Detail extends StatelessWidget {
               ),
               Text(
                 arg.nameBook,
-                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                style:
+                    const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 10, bottom: 10),
                 child: Row(
                   children: [
-                    Text("(0)"),
-                    SizedBox(
+                    const Text("(0)"),
+                    const SizedBox(
                       width: 10,
                     ),
                     Expanded(
-                      child: Text("Đã bán ${arg.stock_quantity}"),
                       flex: 2,
+                      child: Text("Đã bán ${arg.stockQuantity}"),
                     ),
                     IconButton(
-                        onPressed: () {}, icon: Icon(Icons.favorite_border))
+                        onPressed: () {},
+                        icon: const Icon(Icons.favorite_border))
                   ],
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(top: 20, bottom: 20),
+                padding: const EdgeInsets.only(top: 20, bottom: 20),
                 child: Wrap(
                   direction: Axis.vertical,
                   spacing: 20,
                   children: [
-                    Text(
+                    const Text(
                       "Thông tin sản phẩm",
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     infor("Mã hàng", "${arg.id}"),
-                    infor("Tác giả", "${arg.author}"),
-                    infor("Nhà xuất bản", "${arg.publisher}"),
+                    infor("Tác giả", arg.author),
+                    infor("Nhà xuất bản", arg.publisher),
                     infor("Ngày xuất bản",
-                        "${DateFormat('dd-MM-yyyy').format(arg.publicationDate)}"),
-                    infor("Ngôn ngữ", "${arg.language}"),
+                        DateFormat('dd-MM-yyyy').format(arg.publicationDate)),
+                    infor("Ngôn ngữ", arg.language),
                     infor("Thể loại", "${arg.categoryID}"),
-                    infor("Mô tả", "${arg.description}"),
+                    infor("Mô tả", arg.description),
                   ],
                 ),
               ),
-              Text("Đánh giá sản phẩm"),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5)),
-                    side: BorderSide(
-                      color: Colors.red,
-                      width: 2.0,
-                    )),
-                onPressed: () {},
-                child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.edit,
-                        color: Colors.red,
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Text(
-                        "Viết đánh giá",
-                        style: TextStyle(color: Colors.red),
-                      )
-                    ],
-                  ),
-                ),
-              )
             ],
           ),
         ),
@@ -280,8 +238,8 @@ class Detail extends StatelessWidget {
       child: Row(
         children: [
           SizedBox(
-            child: Text(w1),
             width: 200,
+            child: Text(w1),
           ),
           SizedBox(
             child: Text(w2),
