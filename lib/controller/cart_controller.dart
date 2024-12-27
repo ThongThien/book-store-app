@@ -25,16 +25,16 @@ class CartController extends GetxController {
     update(['totalPrice']);
   }
 
+  void decrease(int index) {
+    cart[index].sl--;
+    update(['count']);
+    update(['totalPrice']);
+  }
+
   void addressHandle(List<TextEditingController> addressList) {
     for (int i = 0; i < addressList.length; i++) {
       address.insert(i, addressList[i].text.toString());
     }
-  }
-
-  void decrease(int index) {
-    cart[index].sl++;
-    update(['count']);
-    update(['totalPrice']);
   }
 
   void addToCart(Book book, int sum) {

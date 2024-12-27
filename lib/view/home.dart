@@ -3,7 +3,6 @@ import 'package:book_store/view/categories.dart';
 import 'package:book_store/view/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../controller/book_controller.dart';
 import '../model/book.dart';
 
@@ -33,7 +32,7 @@ class HomePage extends StatelessWidget {
                 child: TextField(
                   controller: searchController,
                   decoration: InputDecoration(
-                    hintText: 'Search books...',
+                    hintText: 'Tìm kiếm sách tại dây...',
                     filled: true,
                     fillColor: Colors.white,
                     border: OutlineInputBorder(
@@ -77,7 +76,7 @@ class HomePage extends StatelessWidget {
             future: controller.futureBooks,
             builder: (context, snapshot) {
               if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                return const Center(child: Text('No books found.'));
+                return const Center(child: Text('Không tìm thấy sách.'));
               }
 
               final books = snapshot.data!;

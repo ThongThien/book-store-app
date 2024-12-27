@@ -41,7 +41,7 @@ class _DanhmucState extends State<Danhmuc> {
           style: TextStyle(color: Colors.white),
         ),
         iconTheme: const IconThemeData(color: Colors.white),
-        backgroundColor: Colors.orange,
+        backgroundColor: Colors.blue,
       ),
       body: FutureBuilder<void>(
         future: controller.getData(),

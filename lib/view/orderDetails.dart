@@ -28,10 +28,8 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
     _orderDetailsFuture = userController.getOrderDetails(widget.orderID);
   }
 
-  Future<void> _updateStateAndRefresh(int itemId, String newState) async {
+  Future<void> _updateState(int itemId, String newState) async {
     await userController.updateState(itemId, newState);
-
-    // Làm mới giao diện bằng cách gọi lại dữ liệu
     setState(() {
       _snapshotOrderDetails();
     });
@@ -41,7 +39,7 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Order details"),
+        title: const Text("Chi tiết hóa đơn"),
       ),
       body: FutureBuilder<List<Map<String, dynamic>>>(
         future: _orderDetailsFuture,
@@ -50,7 +48,7 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
             return const Center(child: CircularProgressIndicator());
           }
           if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return const Center(child: Text('No details found.'));
+            return const Center(child: Text('Không có đơn hàng'));
           }
 
           final orderDetails = snapshot.data!;
@@ -76,8 +74,8 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                   subtitle: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Quantity: ${item['quantity']}'),
-                      Text('State: $state'),
+                      Text('Số lượng: ${item['quantity']}'),
+                      Text('Trạng thái: $state'),
                       Text('${item['price']} \$'),
                     ],
                   ),
@@ -85,7 +83,7 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                       ? null
                       : ElevatedButton(
                           onPressed: () async {
-                            await _updateStateAndRefresh(item['id'], "Đã Hủy");
+                            await _updateState(item['id'], "Đã Hủy");
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.red,

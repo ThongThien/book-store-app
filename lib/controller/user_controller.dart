@@ -18,7 +18,6 @@ class UserController extends GetxController {
     try {
       final userData =
           await _client.from('user').select('*').eq('id', userId).maybeSingle();
-
       if (userData == null) {
         return {
           'user': null,
@@ -31,7 +30,6 @@ class UserController extends GetxController {
           .select('id, created_at, total_price, shipping_address, '
               'order_item(book_id, quantity, price)')
           .eq('user_id', userId);
-
       return {
         'user': UserModel.fromMap(userData),
         'orders': ordersData,

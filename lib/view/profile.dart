@@ -14,7 +14,7 @@ class UserPage extends StatefulWidget {
 class _UserPageState extends State<UserPage> {
   final UserController userController = Get.put(UserController());
   Map<String, dynamic>?
-      _userData; // lưu trữ dữ liệu người dùng và danh sách đơn hàng
+      _userData; // lưu trữ dữ liệu người dùng và danh sách đơn hàng tu ham _userDataSnapshot
 //_userData = {
 //   'user': UserModel, // Thông tin người dùng
 //   'orders': List<Map<String, dynamic>> // Danh sách đơn hàng
@@ -38,7 +38,7 @@ class _UserPageState extends State<UserPage> {
     if (_userData == null) {
       return Scaffold(
         appBar: AppBar(
-          title: const Text('User Information'),
+          title: const Text('Thông tin người dùng'),
         ),
         body: const Center(
           child: CircularProgressIndicator(),
@@ -47,14 +47,13 @@ class _UserPageState extends State<UserPage> {
     }
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Profile'),
+        title: const Text('Thông tin người dùng'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Thông tin user
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -74,11 +73,11 @@ class _UserPageState extends State<UserPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'User ID: ${userController.userId.value}',
+                          'ID: ${userController.userId.value}',
                           style: const TextStyle(fontSize: 18),
                         ),
                         Text(
-                          'Name: ${_userData!['user'].name}',
+                          'Tên: ${_userData!['user'].name}',
                           style: const TextStyle(fontSize: 18),
                         ),
                         Text(
@@ -86,11 +85,11 @@ class _UserPageState extends State<UserPage> {
                           style: const TextStyle(fontSize: 18),
                         ),
                         Text(
-                          'Address: ${_userData!['user'].address}',
+                          'Địa Chỉ: ${_userData!['user'].address}',
                           style: const TextStyle(fontSize: 18),
                         ),
                         Text(
-                          'Phone Number: ${_userData!['user'].phoneNumber}',
+                          'Số Điện Thoại: ${_userData!['user'].phoneNumber}',
                           style: const TextStyle(fontSize: 18),
                         ),
                       ],
@@ -104,7 +103,7 @@ class _UserPageState extends State<UserPage> {
                           (Route<dynamic> route) => false,
                         );
                       },
-                      child: const Text("Logout"),
+                      child: const Text("Đăng xuất"),
                     ),
                   ],
                 ),
@@ -114,7 +113,7 @@ class _UserPageState extends State<UserPage> {
             const Divider(),
             const SizedBox(height: 10),
             const Text(
-              'Orders:',
+              'Hóa đơn đã đặt:',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             Expanded(
@@ -125,11 +124,11 @@ class _UserPageState extends State<UserPage> {
                   return Card(
                     margin: const EdgeInsets.symmetric(vertical: 8.0),
                     child: ListTile(
-                      title: Text('Order ID: ${order['id']}'),
+                      title: Text('Mã hóa đơn: ${order['id']}'),
                       subtitle: Text(
-                        'Total Price: ${order['total_price']} VND\n'
-                        'Shipping Address: ${order['shipping_address']} \n'
-                        'Order date: ${order['created_at']}',
+                        'Tổng giá: ${order['total_price']} VND\n'
+                        'Địa chỉ giao hàng: ${order['shipping_address']} \n'
+                        'Ngày đặt: ${order['created_at']}',
                       ),
                       onTap: () {
                         Navigator.push(

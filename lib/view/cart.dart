@@ -41,12 +41,22 @@ class Cart extends StatelessWidget {
             ),
             Expanded(
                 child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => AddressPage(),
-                      ));
-                    },
-                    child: const Text("Thanh toán")))
+                  onPressed: () {
+                    if (controller.cart.isEmpty) {
+                      Get.snackbar(
+                        "Giỏ hàng trống",
+                        "Vui lòng thêm sản phẩm trước khi thanh toán",
+                        snackPosition: SnackPosition.BOTTOM,
+                      );
+                      return;
+                    }
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => AddressPage(),
+                    ));
+                  },
+                  child: const Text("Thanh toán"),
+                )
+            )
           ],
         ),
       ),

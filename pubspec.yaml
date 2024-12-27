@@ -37,7 +37,6 @@ dependencies:
   cupertino_icons: ^1.0.8
   carousel_slider:
   intl:
-  provider: ^6.0.4
   get: ^4.6.6
   supabase_flutter: ^2.0.0
 dev_dependencies:

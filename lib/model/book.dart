@@ -44,23 +44,23 @@ class Book {
   factory Book.fromMap(Map<String, dynamic> map) {
     return Book(
       id: map['id'] != null ? map['id'] as int : 0,
-      nameBook: map['nameBook'] ?? 'Unknown',
+      nameBook: map['nameBook'] ?? '',
       publicationDate: map['publicationDate'] != null
           ? DateTime.tryParse(map['publicationDate']) ?? DateTime.now()
           : DateTime.now(),
-      author: map['author'] ?? 'Unknown',
-      publisher: map['publisher'] ?? 'Unknown',
+      author: map['author'] ?? '',
+      publisher: map['publisher'] ?? '',
       categoryID: map['categoryID'] != null ? map['categoryID'] as int : 0,
       price: map['price'] != null
           ? (map['price'] is int
               ? (map['price'] as int).toDouble()
               : map['price'] as double)
           : 0.0,
-      description: map['description'] ?? 'No description',
+      description: map['description'] ?? '',
       stockQuantity:
           map['stock_quantity'] != null ? map['stock_quantity'] as int : 0,
       image: map['image'],
-      language: map['language'] ?? 'Unknown',
+      language: map['language'] ?? '',
     );
   }
 }

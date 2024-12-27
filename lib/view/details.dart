@@ -43,9 +43,9 @@ class Detail extends StatelessWidget {
                             child: IconButton(
                                 iconSize: 20,
                                 onPressed: () {
-                                  controller.increase();
+                                  controller.decrease();
                                 },
-                                icon: const Icon(Icons.add)),
+                                icon: const Icon(Icons.remove)),
                           ),
                         ),
                         Expanded(
@@ -75,9 +75,9 @@ class Detail extends StatelessWidget {
                             child: IconButton(
                                 iconSize: 20,
                                 onPressed: () {
-                                  controller.decrease();
+                                  controller.increase();
                                 },
-                                icon: const Icon(Icons.remove)),
+                                icon: const Icon(Icons.add)),
                           ),
                         ),
                       ],
@@ -97,7 +97,7 @@ class Detail extends StatelessWidget {
                   onTap: () {
                     cartController.addToCart(arg, controller.count);
                   },
-                  child: const Text("Thêm vào giỏ hàng",
+                  child: const Text("Thêm vào giỏ",
                       style: TextStyle(fontSize: 20, color: Colors.orange)),
                 ),
               )),
@@ -106,7 +106,7 @@ class Detail extends StatelessWidget {
         ),
       ),
       appBar: AppBar(
-        backgroundColor: Colors.orange,
+        backgroundColor: Colors.blue,
         actionsIconTheme: const IconThemeData(),
         leading: IconTheme(
           data: const IconThemeData(

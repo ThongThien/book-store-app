@@ -16,7 +16,7 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("LOGIN"),
+        title: const Text("Đăng Nhập"),
       ),
       body: Padding(
         padding: const EdgeInsets.all(10.0),
@@ -26,20 +26,20 @@ class LoginPage extends StatelessWidget {
             TextField(
               controller: usernameController,
               decoration: const InputDecoration(
-                  labelText: "Username", border: OutlineInputBorder()),
+                  labelText: "Tài khoản", border: OutlineInputBorder()),
             ),
             const SizedBox(height: 20),
             TextField(
               controller: passwordController,
               decoration: const InputDecoration(
-                  labelText: "Password", border: OutlineInputBorder()),
+                  labelText: "Mật khẩu", border: OutlineInputBorder()),
               obscureText: true,
             ),
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () => loginController.login(
                   usernameController.text, passwordController.text),
-              child: const Text("Login"),
+              child: const Text("Đăng Nhập"),
             ),
           ],
         ),
