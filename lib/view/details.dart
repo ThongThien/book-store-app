@@ -128,7 +128,7 @@ class Detail extends StatelessWidget {
                   builder: (context) => Cart(),
                 ));
               },
-              icon: const Icon(Icons.shopping_cart_checkout_outlined)),
+              icon: const Icon(Icons.shopping_cart_checkout_outlined),color: Colors.white,iconSize: 30,),
         ],
       ),
       body: SingleChildScrollView(
@@ -139,7 +139,7 @@ class Detail extends StatelessWidget {
             children: [
               CarouselSlider(
                 options: CarouselOptions(height: 400.0),
-                items: [1, 2, 3, 4, 5].map((i) {
+                items: [1].map((i) {
                   return Builder(
                     builder: (BuildContext context) {
                       return Container(
@@ -167,17 +167,6 @@ class Detail extends StatelessWidget {
                           color: Colors.red,
                           fontWeight: FontWeight.w900),
                     ),
-                    const Text(
-                      "178.000",
-                      style: TextStyle(
-                          fontSize: 20,
-                          color: CupertinoColors.systemGrey2,
-                          decoration: TextDecoration.lineThrough),
-                    ),
-                    const Text(
-                      "-27%",
-                      style: TextStyle(color: Colors.red),
-                    )
                   ],
                 ),
               ),
@@ -185,24 +174,6 @@ class Detail extends StatelessWidget {
                 arg.nameBook,
                 style:
                     const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 10, bottom: 10),
-                child: Row(
-                  children: [
-                    const Text("(0)"),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Expanded(
-                      flex: 2,
-                      child: Text("Đã bán ${arg.stockQuantity}"),
-                    ),
-                    IconButton(
-                        onPressed: () {},
-                        icon: const Icon(Icons.favorite_border))
-                  ],
-                ),
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 20, bottom: 20),

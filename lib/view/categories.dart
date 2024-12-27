@@ -2,16 +2,7 @@ import 'package:book_store/controller/category_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-List<String> listEx = [
-  "Sách trong nước",
-  "FOREIGN BOOKS",
-  "VPP - Dụng cụ học sinh",
-  "Đồ chơi",
-  "Làm đẹp - Sức khỏe",
-  "Hành trang đến trường",
-  "Mô hình đồ chơi",
-  "Thể thao"
-];
+
 List<String> dropdown = [
   "Nhân vật -Bài học Kinh doanh",
   "Quản trị - Lãnh đạo",
@@ -48,35 +39,10 @@ class _DanhmucState extends State<Danhmuc> {
         builder: (context, snapshot) {
           return Row(
             children: [
-              Expanded(
-                  flex: 1,
-                  child: ListView.separated(
-                    itemBuilder: (context, index) {
-                      return ListTile(
-                        tileColor: idx == index ? Colors.orange : Colors.white,
-                        title: const Icon(Icons.access_time_filled),
-                        subtitle: Text(
-                          listEx[index],
-                          textAlign: TextAlign.center,
-                        ),
-                        onTap: () {
-                          setState(() {
-                            idx = index;
-                          });
-                        },
-                      );
-                    },
-                    separatorBuilder: (context, index) => const Divider(
-                      height: 0,
-                      thickness: 1,
-                    ),
-                    itemCount: listEx.length,
-                  )),
               const SizedBox(
                 width: 10,
               ),
               Expanded(
-                  flex: 2,
                   child: Column(
                     children: [
                       Container(
